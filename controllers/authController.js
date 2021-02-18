@@ -57,11 +57,65 @@ const post_register = async (req, res) => {
 
 // ------------------- Login -------------------
 const get_login_page = (req, res) => {
-  res.render("login");
+  res.render("login", {
+    messageRegisterSuccess: req.flash("messageRegisterSuccess"),
+    messageEmailIncorrect: req.flash("messageEmailIncorrect"),
+    messageNotConnected: req.flash("messageNotConnected"),
+  });
+};
+
+const post_login = async (req, res) => {
+  const { email, password } = req.body;
+
+  const checkEmail = await query("SELECT * FROM user WHERE email=?", email);
+
+  if (checkEmail[0].email != email) {
+    // console.log("email:", email, "check:", checkEmail[0].email);
+    req.flash(
+      "messageEmailIncorrect",
+      `L'email est incorrect. Veuillez la saisir à nouveau ou vous inscrire en cliquant `
+    );
+    return res.redirect("/auth/login");
+  } else {
+    console.log("cool");
+    // L'email existe : vérification du mot de passe
+    const user = await query(
+      "SELECT userID, firstname, lastname, email, password FROM user WHERE email = ?",
+      email
+    );
+    const match = await bcrypt.compare(password, user[0].password);
+
+    if (match) {
+      //login
+      req.session.userId = user[0].userID;
+      req.session.firstname = user[0].firstname;
+
+      // récupérer les infos de l'utilisateur et les stocker dans la session
+      req.session.user = {
+        id: user[0].userID,
+        firstname: user[0].firstname,
+        lastname: user[0].lastname,
+        email: user[0].email,
+      };
+      console.log("session :", req.session.user);
+      res.redirect("/");
+    } else {
+      console.log("erreur connexion");
+    }
+  }
+};
+
+//  --------------- Logout ---------------
+const get_logout = async (req, res) => {
+  req.session.destroy(function (err) {
+    res.redirect("/auth/login");
+  });
 };
 
 module.exports = {
   get_register_page,
-  get_login_page,
   post_register,
+  get_login_page,
+  post_login,
+  get_logout,
 };

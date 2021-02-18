@@ -12,14 +12,25 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
+          <% if (user) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/post">Poster un article</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/logout">Déconnexion</a>
+          </li>
+          <% } else if (!locals.user){ %>
           <li class="nav-item">
             <a class="nav-link" href="/auth/register">S'inscrire</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/auth/login">Se connecter</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/post">Poster un article</a>
+          <% } %>
+          <li>
+            <% if (user) { %>
+            <p>Salut <%= name %> </p>
+            <% } %>
           </li>
         </ul>
       </div>

@@ -58,6 +58,14 @@ app.use(
 // Messages flash
 app.use(flash());
 
+// Pour identifier l'utilisateur connecté sur toutes les pages du site
+app.use("*", (req, res, next) => {
+  res.locals.user = req.session.userId;
+  res.locals.name = req.session.firstname;
+  console.log(` id : ${res.locals.user}, name : ${res.locals.name}`);
+  next();
+});
+
 // Routes
 const index = require("./routes/indexRoute");
 const post = require("./routes/postRoute");

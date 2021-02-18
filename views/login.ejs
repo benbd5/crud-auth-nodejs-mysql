@@ -10,12 +10,28 @@
     <div class="col-md-6">
       <!-- Sign in -->
 
+      <!-- Inscrit avec succès -->
       <% if (messageRegisterSuccess.length > 0) { %>
       <div class="alert alert-success" role="alert">
         <%= messageRegisterSuccess %>
       </div>
       <% } %>
 
+      <!-- Email incorrect -->
+      <% if (messageEmailIncorrect.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= messageEmailIncorrect %> <a href="/auth/register">ici</a>
+      </div>
+      <% } %>
+
+      <!-- Message de redirection après tentative d'accès à une page non autorisée -->
+      <% if (messageNotConnected.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= messageNotConnected %>
+      </div>
+      <% } %>
+
+      <!-- Formulaire de connexion -->
       <form action="/auth/login" method="POST">
         <div class="mb-4">
           <h2 class="h4">Se connecter</h2>
