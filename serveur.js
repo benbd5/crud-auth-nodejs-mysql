@@ -1,6 +1,14 @@
 const express = require("express"),
   app = express(),
-  port = 3000;
+  port = 3000,
+  util = require("util"),
+  session = require("express-session"),
+  flash = require("connect-flash"),
+  MySQLStore = require("express-mysql-session")(session),
+  mysql = require("mysql");
+
+// Dotenv
+require("dotenv").config();
 
 // EJS
 app.set("view engine", "ejs");
@@ -12,12 +20,52 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// MySQL connection
+const connection = mysql.createConnection({
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PSWD,
+  database: process.env.DB,
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
+
+// Variable globale pour mysql : util.promisify de node.js lié avec .bind()
+global.query = util.promisify(connection.query).bind(connection);
+
+// Express session MySQL pour récupérer les cookies dans la db
+const sessionStore = new MySQLStore({}, connection);
+
+// Express Session
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false, // force à ce qu'une nouvelle session soit crée
+    saveUninitialized: true, // force à ce qu'une nouvelle session soit enregistrée
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // le cookie dure 24h
+    },
+    store: sessionStore, // SessionsStore pour récupérer les cookies dans la db
+  })
+);
+
+// Messages flash
+app.use(flash());
+
 // Routes
 const index = require("./routes/indexRoute");
 const post = require("./routes/postRoute");
+const auth = require("./routes/authRoute");
 
 app.use("/", index);
 app.use("/post", post);
+app.use("/auth", auth);
 
 app.get("*", function (req, res) {
   res.render("404");
