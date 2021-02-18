@@ -10,18 +10,28 @@
     <div class="col-md-6">
       <!-- Sign in -->
 
+      <!-- Email déjà utilisé -->
       <% if (messageEmailUsed.length > 0) { %>
       <div class="alert alert-danger" role="alert">
         <%= messageEmailUsed %>
       </div>
       <% } %>
 
+      <!-- Tous les champs ne sont pas remplis -->
       <% if (messageFields.length > 0) { %>
       <div class="alert alert-danger" role="alert">
         <%= messageFields %>
       </div>
       <% } %>
 
+      <!-- Les mots de passe ne sont pas identiques -->
+      <% if (messageDoubleChekMdp.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= messageDoubleChekMdp %>
+      </div>
+      <% } %>
+
+      <!-- Formulaire d'inscription -->
       <form action="/auth/register" method="POST">
         <div class="mb-4">
           <h2 class="h4">S'inscrire</h2>
@@ -52,6 +62,13 @@
         <div class="mb-3">
           <div class="input-group">
             <input type="password" class="form-control form__input" name="password" placeholder="Votre mot de passe">
+          </div>
+        </div>
+        <!-- Confirm password -->
+        <div class="mb-3">
+          <div class="input-group">
+            <input type="password" class="form-control form__input" name="confirmPassword"
+              placeholder="Confirmez votre mot de passe">
           </div>
         </div>
 

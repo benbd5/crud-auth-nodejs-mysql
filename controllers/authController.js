@@ -6,11 +6,12 @@ const get_register_page = (req, res) => {
     messageEmailUsed: req.flash("messageEmailUsed"),
     messageError: req.flash("messageError"),
     messageFields: req.flash("messageFields"),
+    messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
   });
 };
 
 const post_register = async (req, res) => {
-  const { firstname, lastname, email, password } = req.body;
+  const { firstname, lastname, email, password, confirmPassword } = req.body;
 
   // Vérifie si l'email existe
   const findEmail = await query(
@@ -25,6 +26,14 @@ const post_register = async (req, res) => {
   // Condition pour vérifier que les champs ne sont pas vides
   if (!firstname || !lastname || !email || !password) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
+    res.redirect("/auth/register");
+  }
+
+  if (password != confirmPassword) {
+    req.flash(
+      "messageDoubleChekMdp",
+      "Les mots de passe ne sont pas identiques."
+    );
     res.redirect("/auth/register");
   } else {
     // Ajout d'un utilisateur
@@ -67,22 +76,24 @@ const get_login_page = (req, res) => {
 const post_login = async (req, res) => {
   const { email, password } = req.body;
 
+  // Vérification de l'email
   const checkEmail = await query("SELECT * FROM user WHERE email=?", email);
 
   if (checkEmail[0].email != email) {
     // console.log("email:", email, "check:", checkEmail[0].email);
     req.flash(
       "messageEmailIncorrect",
-      `L'email est incorrect. Veuillez la saisir à nouveau ou vous inscrire en cliquant `
+      `L'email est incorrect. Veuillez la saisir à nouveau ou vous inscrire en cliquant ` // (ici) --> suite sur login.ejs
     );
     return res.redirect("/auth/login");
   } else {
-    console.log("cool");
     // L'email existe : vérification du mot de passe
     const user = await query(
       "SELECT userID, firstname, lastname, email, password FROM user WHERE email = ?",
       email
     );
+
+    // Comparaison des mots de passe
     const match = await bcrypt.compare(password, user[0].password);
 
     if (match) {

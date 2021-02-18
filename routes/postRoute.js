@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const postController = require("../controllers/postController");
 
-// Middleware
+// Middleware (redirection si utilisateur non connecté)
 const verifyAuth = require("../middlewares/authMiddleware");
 
 // GET - Index Page
