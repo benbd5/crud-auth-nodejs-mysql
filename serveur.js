@@ -62,7 +62,7 @@ app.use(flash());
 app.use("*", (req, res, next) => {
   res.locals.user = req.session.userId;
   res.locals.name = req.session.firstname;
-  console.log(` id : ${res.locals.user}, name : ${res.locals.name}`);
+  // console.log(` id : ${res.locals.user}, name : ${res.locals.name}`);
   next();
 });
 

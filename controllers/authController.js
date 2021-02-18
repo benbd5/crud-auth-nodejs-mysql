@@ -7,6 +7,7 @@ const get_register_page = (req, res) => {
     messageError: req.flash("messageError"),
     messageFields: req.flash("messageFields"),
     messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
+    data: req.flash("data"),
   });
 };
 
@@ -25,11 +26,18 @@ const post_register = async (req, res) => {
 
   // Condition pour vérifier que les champs ne sont pas vides
   if (!firstname || !lastname || !email || !password) {
+    req.flash("data", req.body);
+    console.log(req.body);
+
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     res.redirect("/auth/register");
   }
 
+  // Mots de passes non hashés lors de la comparaison
   if (password != confirmPassword) {
+    req.flash("data", req.body);
+    console.log(req.body);
+
     req.flash(
       "messageDoubleChekMdp",
       "Les mots de passe ne sont pas identiques."
@@ -47,7 +55,9 @@ const post_register = async (req, res) => {
         [firstname, lastname, email, hashPassword],
         (err, result) => {
           if (err) {
+            // Flash pour récupérer les données saisies par l'utilisateur
             req.flash("messageError", `Il y a une erreur ${err}`);
+
             return res.redirect("/auth/register");
           }
           // Ok inscription effectuée --> redirection vers login
