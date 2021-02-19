@@ -17,10 +17,25 @@ router.post(
 );
 
 // Page LISTE des articles
-router.get("/liste-des-articles", articlesController.get_list_article);
+router.get("/", articlesController.get_list_article);
 
 // Page MODIFIER les articles + modification
+router.get(
+  "/updateArticle/:id",
+  verifyAuth.get_verify_auth,
+  articlesController.get_update_article
+);
+router.put(
+  "/update-article/:id",
+  verifyAuth.get_verify_auth,
+  articlesController.update_article
+);
 
 // SUPPRIMER les articles
+router.delete(
+  "/delete/:id",
+  verifyAuth.get_verify_auth,
+  articlesController.delete_articles
+);
 
 module.exports = router;

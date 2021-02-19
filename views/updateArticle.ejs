@@ -1,0 +1,25 @@
+<%- include('partials/header.ejs') %>
+<%- include('partials/navbar.ejs') %>
+
+<div class="container">
+    <form action="/update-article/<%= article.articleId %>?_method=PUT " method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Titre</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Titre" name="titre"
+                value="<%= article.titre %> ">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description">
+                <%= article.description %> 
+            </textarea>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Image</label>
+            <input class="form-control" type="file" id="formFile" name="image" value="<%= article.image %> ">
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+</div>
+
+<%- include('partials/footer.ejs') %>

@@ -6,6 +6,8 @@ const express = require("express"),
   flash = require("connect-flash"),
   MySQLStore = require("express-mysql-session")(session),
   bodyParser = require("body-parser"),
+  fileupload = require("express-fileupload"),
+  methodOverride = require("method-override"),
   mysql = require("mysql");
 
 // Dotenv
@@ -20,6 +22,9 @@ app.use(express.static("public"));
 // Middleware - BodyParser
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Method-override pour update et delete
+app.use(methodOverride("_method"));
 
 // MySQL connection
 const connection = mysql.createConnection({
@@ -58,6 +63,9 @@ app.use(
 
 // Messages flash
 app.use(flash());
+
+// Pour les images
+app.use(fileupload());
 
 // Pour identifier l'utilisateur connecté sur toutes les pages du site
 app.use("*", (req, res, next) => {

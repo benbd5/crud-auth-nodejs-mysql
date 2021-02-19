@@ -7,11 +7,16 @@
 
     <% listArticles.forEach(article => { %>
 
-    <div class="card">
+    <div class="card col-3">
       <h2><%= article.titre %> </h2>
       <p><%= article.description %> </p>
       <p><%= article.categories %> </p>
       <p><%= article.userId %> </p>
+      <img src="/uploads/<%= article.image %>" class="card-img-top" alt="Image : <%= article.titre %> ">
+      <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
+      <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+      </form>
     </div>
 
     <% }) %>

@@ -1,7 +1,7 @@
 <%- include('partials/header.ejs') %>
 <%- include('partials/navbar.ejs') %>
 
-<form action="/send" method="POST">
+<form action="/send" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
         <input type="title" class="form-control" id="title" name="titre" placeholder="Titre">
@@ -13,18 +13,20 @@
             placeholder="Description de l'article"></textarea>
     </div>
 
+
+
     <!-- <div class="mb-3">
-        <select class="form-select" required aria-label="select" name="categories">
-            <option value="">Ouvrir le menu</option>
+        <select class="form-select" required aria-label="select" name="userId>
+            <option value="">Choisir</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
         </select>
     </div> -->
 
-    <!-- <div class="mb-3">
+    <div class="mb-3">
         <input type="file" class="form-control" aria-label="file example" name="image">
-    </div> -->
+    </div>
 
     <div class="mb-3">
         <button class="btn btn-primary" type="submit">Envoyer</button>
