@@ -41,7 +41,7 @@
         <div class="mb-3">
           <div class="input-group">
             <input type="text" class="form-control form__input" name="lastname" placeholder="Votre nom"
-              value="<%= data.lastname %>">
+              <% if (locals.form) { %> value="<%= form.lastname %>" <% } %>>
           </div>
         </div>
 
@@ -49,7 +49,7 @@
         <div class="mb-3">
           <div class="input-group">
             <input type="text" class="form-control form__input" name="firstname" placeholder="Votre prénom"
-              value="<%= data.firstname %>">
+              <% if (locals.form) { %> value="<%= form.firstname %>" <% } %>>
           </div>
         </div>
 
@@ -57,7 +57,7 @@
         <div class="mb-3">
           <div class="input-group">
             <input type="email" class="form-control form__input" name="email" placeholder="Votre email"
-              value="<%= data.email %>">
+              <% if (locals.form) { %> value="<%= form.email %>" <% } %>>
           </div>
         </div>
 
@@ -67,6 +67,7 @@
             <input type="password" class="form-control form__input" name="password" placeholder="Votre mot de passe">
           </div>
         </div>
+
         <!-- Confirm password -->
         <div class="mb-3">
           <div class="input-group">

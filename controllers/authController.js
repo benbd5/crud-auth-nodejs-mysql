@@ -7,12 +7,17 @@ const get_register_page = (req, res) => {
     messageError: req.flash("messageError"),
     messageFields: req.flash("messageFields"),
     messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
-    data: req.flash("data"),
   });
 };
 
 const post_register = async (req, res) => {
   const { firstname, lastname, email, password, confirmPassword } = req.body;
+
+  const form = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+  };
 
   // Vérifie si l'email existe
   const findEmail = await query(
@@ -26,23 +31,33 @@ const post_register = async (req, res) => {
 
   // Condition pour vérifier que les champs ne sont pas vides
   if (!firstname || !lastname || !email || !password) {
-    req.flash("data", req.body);
-    console.log(req.body);
-
     req.flash("messageFields", "Veuillez remplir tous les champs.");
-    res.redirect("/auth/register");
+
+    // TODO : voir pour redirect au lieu de render pour éviter de répéter les messages flash
+    res.render("register", {
+      form,
+      messageEmailUsed: req.flash("messageEmailUsed"),
+      messageError: req.flash("messageError"),
+      messageFields: req.flash("messageFields"),
+      messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
+    });
   }
 
   // Mots de passes non hashés lors de la comparaison
   if (password != confirmPassword) {
-    req.flash("data", req.body);
-    console.log(req.body);
-
     req.flash(
       "messageDoubleChekMdp",
       "Les mots de passe ne sont pas identiques."
     );
-    res.redirect("/auth/register");
+
+    // TODO : voir pour redirect au lieu de render pour éviter de répéter les messages flash
+    res.render("register", {
+      form,
+      messageEmailUsed: req.flash("messageEmailUsed"),
+      messageError: req.flash("messageError"),
+      messageFields: req.flash("messageFields"),
+      messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
+    });
   } else {
     // Ajout d'un utilisateur
     try {

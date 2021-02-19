@@ -18,7 +18,7 @@ app.use(express.static("public"));
 
 // Middleware - BodyParser
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // MySQL connection
 const connection = mysql.createConnection({
@@ -72,7 +72,7 @@ const post = require("./routes/postRoute");
 const auth = require("./routes/authRoute");
 
 app.use("/", index);
-app.use("/post", post);
+app.use(post);
 app.use("/auth", auth);
 
 app.get("*", function (req, res) {
