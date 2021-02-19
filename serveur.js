@@ -76,11 +76,11 @@ app.use("*", (req, res, next) => {
 });
 
 // Routes
-const index = require("./routes/indexRoute");
+const admin = require("./routes/adminRoutes");
 const articles = require("./routes/articlesRoute");
 const auth = require("./routes/authRoute");
 
-app.use("/", index);
+app.use("/admin", admin);
 app.use(articles);
 app.use("/auth", auth);
 

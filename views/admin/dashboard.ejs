@@ -1,0 +1,50 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Tableau de bord</h1>
+      <a href="/auth/logout">Se déconnecter</a>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Détails</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% articles.forEach(article => { %>
+          <tr>
+            <th scope="row"><%= article.articleId %></th>
+            <td><%= article.titre %></td>
+            <td>
+              <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Détails</a>
+            </td>
+            <td>
+              <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
+            </td>
+            <td>
+              <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<%- include('../partials/footer.ejs') %>

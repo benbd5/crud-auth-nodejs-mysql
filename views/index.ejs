@@ -13,16 +13,12 @@
       <p><%= article.categories %> </p>
       <p><%= article.userId %> </p>
       <img src="/uploads/<%= article.image %>" class="card-img-top" alt="Image : <%= article.titre %> ">
-      <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
-      <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
-        <button type="submit" class="btn btn-danger">Supprimer</button>
-      </form>
+      <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Lire la suite...</a>
     </div>
 
     <% }) %>
 
   </div>
-</div>
 </div>
 
 

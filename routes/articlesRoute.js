@@ -4,6 +4,12 @@ const articlesController = require("../controllers/articlesController");
 // Middleware (redirection si utilisateur non connecté)
 const verifyAuth = require("../middlewares/authMiddleware");
 
+router.get("/", articlesController.get_list_article);
+
+// Page LISTE des articles
+router.get("/liste-des-articles", articlesController.get_list_article);
+router.get("/liste-des-articles/:id", articlesController.get_details_article);
+
 // Page POST + poster des articles
 router.get(
   "/post",
@@ -15,9 +21,6 @@ router.post(
   verifyAuth.get_verify_auth,
   articlesController.post_article
 );
-
-// Page LISTE des articles
-router.get("/", articlesController.get_list_article);
 
 // Page MODIFIER les articles + modification
 router.get(

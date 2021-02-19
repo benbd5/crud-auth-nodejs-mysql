@@ -10,6 +10,19 @@ const get_list_article = async (req, res) => {
   res.render("index", { listArticles });
 };
 
+const get_details_article = async (req, res) => {
+  const id = req.params.id;
+
+  const singleArticle = await query(
+    "SELECT * FROM article WHERE articleId=?",
+    id
+  );
+
+  res.render("singleArticle", {
+    article: singleArticle[0],
+  });
+};
+
 // -------------------------- POST --------------------------
 // Afficher la page post des articles
 const get_post_page = (req, res) => {
@@ -86,11 +99,12 @@ const delete_articles = async (req, res) => {
   const id = req.params.id;
   await query("DELETE FROM article WHERE articleId=?", [id]);
   console.log("Supprimé");
-  res.redirect("/");
+  res.redirect("/admin/dashboard");
 };
 
 module.exports = {
   get_list_article,
+  get_details_article,
   get_post_page,
   post_article,
   get_update_article,

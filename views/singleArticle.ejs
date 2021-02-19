@@ -1,0 +1,20 @@
+<%- include('partials/header.ejs') %>
+<%- include('partials/navbar.ejs') %>
+
+<h1 class="text-center"><%= article.titre %> </h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="/uploads/<%= article.image %> " class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><%= article.titre %> </h5>
+                    <p class="card-text"><%= article.description %> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer.ejs') %>
