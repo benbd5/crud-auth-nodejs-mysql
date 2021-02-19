@@ -5,6 +5,7 @@ const express = require("express"),
   session = require("express-session"),
   flash = require("connect-flash"),
   MySQLStore = require("express-mysql-session")(session),
+  bodyParser = require("body-parser"),
   mysql = require("mysql");
 
 // Dotenv
@@ -17,7 +18,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 // Middleware - BodyParser
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 // MySQL connection
@@ -68,11 +69,11 @@ app.use("*", (req, res, next) => {
 
 // Routes
 const index = require("./routes/indexRoute");
-const post = require("./routes/postRoute");
+const articles = require("./routes/articlesRoute");
 const auth = require("./routes/authRoute");
 
 app.use("/", index);
-app.use(post);
+app.use(articles);
 app.use("/auth", auth);
 
 app.get("*", function (req, res) {

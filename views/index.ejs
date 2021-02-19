@@ -5,6 +5,16 @@
 <div class="container">
   <div class="row align-items-center">
 
+    <% listArticles.forEach(article => { %>
+
+    <div class="card">
+      <h2><%= article.titre %> </h2>
+      <p><%= article.description %> </p>
+      <p><%= article.categories %> </p>
+      <p><%= article.userId %> </p>
+    </div>
+
+    <% }) %>
 
   </div>
 </div>
