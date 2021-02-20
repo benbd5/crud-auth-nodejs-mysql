@@ -3,11 +3,9 @@
 
 <div class="container">
   <div class="row ">
-    <div class="col-md-6">
-      <img src="/images/login.jpg" class="img-fluid" alt="">
-    </div>
 
-    <div class="col-md-6">
+
+    <div class="col">
       <!-- Sign in -->
 
       <!-- Inscrit avec succès -->
@@ -31,6 +29,13 @@
       </div>
       <% } %>
 
+      <!-- Mdp incorrect -->
+      <% if (messageMdpIncorrect.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= messageMdpIncorrect %>
+      </div>
+      <% } %>
+
       <!-- Formulaire de connexion -->
       <form action="/auth/login" method="POST">
         <div class="mb-4">
@@ -51,7 +56,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-block btn-success">Se connecter</button>
+        <button type="submit" class="btn btn-block btn-primary">Se connecter</button>
       </form>
 
     </div>

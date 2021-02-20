@@ -17,6 +17,8 @@
         <div class="mb-3">
             <label for="formFile" class="form-label">Image</label>
             <input class="form-control" type="file" id="formFile" name="image" value="<%= article.image %> ">
+            <p>Image actuelle :</p>
+            <img src="/uploads/<%= article.image %> " class="img-thumbnail" alt="">
         </div>
         <button type="submit" class="btn btn-primary">Modifier</button>
     </form>

@@ -95,6 +95,7 @@ const get_login_page = (req, res) => {
     messageRegisterSuccess: req.flash("messageRegisterSuccess"),
     messageEmailIncorrect: req.flash("messageEmailIncorrect"),
     messageNotConnected: req.flash("messageNotConnected"),
+    messageMdpIncorrect: req.flash("messageMdpIncorrect"),
   });
 };
 
@@ -136,7 +137,11 @@ const post_login = async (req, res) => {
       console.log("session :", req.session.user);
       res.redirect("/");
     } else {
-      console.log("erreur connexion");
+      req.flash(
+        "messageMdpIncorrect",
+        `Le mot de passe est incorrect. Veuillez le saisir à nouveau.`
+      );
+      res.redirect("login");
     }
   }
 };
