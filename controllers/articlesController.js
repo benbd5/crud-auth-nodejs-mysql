@@ -35,6 +35,7 @@ const get_post_page = (req, res) => {
 // Poster un article
 const post_article = async (req, res) => {
   const { titre, description, categories } = req.body;
+  const userId = res.locals.user;
 
   const image = req.files.image;
   const imageName = image.name; // pour récupérer le nom de l'image dans le dossier uploads
@@ -55,8 +56,8 @@ const post_article = async (req, res) => {
   });
 
   await query(
-    "INSERT INTO article (titre, description, image) VALUES (?,?,?)",
-    [titre, description, imageName]
+    "INSERT INTO article (titre, description, image, userId) VALUES (?,?,?,?)",
+    [titre, description, imageName, userId]
   );
 };
 
@@ -102,7 +103,12 @@ const delete_articles = async (req, res) => {
   const id = req.params.id;
   await query("DELETE FROM article WHERE articleId=?", [id]);
   console.log("Supprimé");
-  res.redirect("/admin/dashboard");
+
+  if (res.locals.role == "user") {
+    res.redirect("/profil");
+  } else if (res.locals.role == "admin") {
+    res.redirect("/admin/dashboard");
+  }
 };
 
 module.exports = {

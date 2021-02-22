@@ -3,7 +3,50 @@
 
 <div class="container">
     <div class="row">
-        <p>test</p>
+        <p><%= userProfil.lastname %></p>
+        <p><%= userProfil.firstname %></p>
+        <p><%= userProfil.email %></p>
+        <p><%= userProfil.password %></p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <h2>Historique des articles</h2>
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Photos</th>
+                        <th scope="col">Noms</th>
+                        <th scope="col">Détails</th>
+                        <th scope="col">Modifier</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% articles.forEach(article => { %>
+                    <tr>
+                        <th scope="row"><%= article.articleId %></th>
+                        <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
+                        <td><%= article.titre %></td>
+                        <td>
+                            <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Détails</a>
+                        </td>
+                        <td>
+                            <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
+                        </td>
+                        <td>
+                            <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

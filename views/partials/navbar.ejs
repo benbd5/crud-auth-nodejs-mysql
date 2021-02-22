@@ -12,10 +12,10 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Accueil</a>
           </li>
-          <% if (locals.role == 'admin'){ %>
           <li class="nav-item">
             <a class="nav-link" href="/post">Poster un article</a>
           </li>
+          <% if (locals.role == 'admin'){ %>
           <li class="nav-item">
             <a class="nav-link" href="/admin/dashboard">Tableau de bord</a>
           </li>
