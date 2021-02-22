@@ -2,11 +2,21 @@
 <%- include('partials/navbar.ejs') %>
 
 <div class="container">
+
+    <!-- Profil modifié -->
+    <% if (messageUpdateSuccess.length > 0) { %>
+    <div class="alert alert-success" role="alert">
+        <%= messageUpdateSuccess %>
+    </div>
+    <% } %>
+
     <div class="row">
-        <p><%= userProfil.lastname %></p>
-        <p><%= userProfil.firstname %></p>
-        <p><%= userProfil.email %></p>
-        <p><%= userProfil.password %></p>
+        <a href="/updateProfil/<%= userProfil.userId %> ">
+            Modifier le profil
+        </a>
+        <p>Nom : <%= userProfil.lastname %></p>
+        <p>Prénom : <%= userProfil.firstname %></p>
+        <p>Adresse mail : <%= userProfil.email %></p>
     </div>
 </div>
 

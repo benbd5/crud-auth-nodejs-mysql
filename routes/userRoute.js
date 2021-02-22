@@ -10,4 +10,12 @@ router.get(
   userController.get_page_profil
 );
 
+router.get(
+  "/updateProfil",
+  verifyAuth.get_verify_auth,
+  userController.get_update_profil
+);
+
+router.put("/update-profil/:id", userController.update_profil);
+
 module.exports = router;
