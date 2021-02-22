@@ -7,6 +7,7 @@ const verifyAuth = require("../middlewares/authMiddleware");
 // GET - Dashboard Page
 router.get(
   "/dashboard",
+  verifyAuth.verify_role,
   verifyAuth.get_verify_auth,
   adminController.get_admin_page
 );

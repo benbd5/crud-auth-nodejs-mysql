@@ -13,6 +13,9 @@ const get_register_page = (req, res) => {
 const post_register = async (req, res) => {
   const { firstname, lastname, email, password, confirmPassword } = req.body;
 
+  // Rôle définit pour les utilisateurs
+  const roles = "user";
+
   const form = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -66,8 +69,8 @@ const post_register = async (req, res) => {
       const hashPassword = await bcrypt.hash(password, saltRounds);
 
       await query(
-        "INSERT INTO user (firstname, lastname, email, password) VALUES (?,?,?,?)",
-        [firstname, lastname, email, hashPassword],
+        "INSERT INTO user (firstname, lastname, email, password, roles) VALUES (?,?,?,?,?)",
+        [firstname, lastname, email, hashPassword, roles],
         (err, result) => {
           if (err) {
             // Flash pour récupérer les données saisies par l'utilisateur
@@ -115,7 +118,7 @@ const post_login = async (req, res) => {
   } else {
     // L'email existe : vérification du mot de passe
     const user = await query(
-      "SELECT userID, firstname, lastname, email, password FROM user WHERE email = ?",
+      "SELECT userID, firstname, lastname, email, password, roles FROM user WHERE email = ?",
       email
     );
 
@@ -123,16 +126,18 @@ const post_login = async (req, res) => {
     const match = await bcrypt.compare(password, user[0].password);
 
     if (match) {
-      //login
+      // Login
       req.session.userId = user[0].userID;
       req.session.firstname = user[0].firstname;
+      req.session.role = user[0].roles;
 
-      // récupérer les infos de l'utilisateur et les stocker dans la session
+      // Récupérer les infos de l'utilisateur et les stocker dans la session
       req.session.user = {
         id: user[0].userID,
         firstname: user[0].firstname,
         lastname: user[0].lastname,
         email: user[0].email,
+        role: user[0].roles,
       };
       console.log("session :", req.session.user);
       res.redirect("/");

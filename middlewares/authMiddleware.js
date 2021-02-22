@@ -10,6 +10,20 @@ const get_verify_auth = (req, res, next) => {
   }
 };
 
+const verify_role = (req, res, next) => {
+  if (res.locals.role == "user") {
+    req.flash(
+      "messageNotAdmin",
+      "Vous n'avez pas les droits pour accéder à cette page"
+    );
+    // console.log("user");
+    return res.redirect("/");
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   get_verify_auth,
+  verify_role,
 };

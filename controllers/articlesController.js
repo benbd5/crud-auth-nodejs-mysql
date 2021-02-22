@@ -7,7 +7,10 @@ const get_list_article = async (req, res) => {
   const listArticles = await query(
     "SELECT article.titre, article.description, article.image, article.categories, article.articleId FROM article"
   );
-  res.render("index", { listArticles });
+  res.render("index", {
+    listArticles,
+    messageNotAdmin: req.flash("messageNotAdmin"),
+  });
 };
 
 const get_details_article = async (req, res) => {

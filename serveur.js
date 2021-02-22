@@ -71,6 +71,8 @@ app.use(fileupload());
 app.use("*", (req, res, next) => {
   res.locals.user = req.session.userId;
   res.locals.name = req.session.firstname;
+  res.locals.role = req.session.role;
+
   // console.log(` id : ${res.locals.user}, name : ${res.locals.name}`);
   next();
 });
