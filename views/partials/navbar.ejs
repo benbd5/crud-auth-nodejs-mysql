@@ -8,16 +8,13 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Accueil</a>
           </li>
-          <% if (user) { %>
+          <% if (locals.role == 'admin'){ %>
           <li class="nav-item">
             <a class="nav-link" href="/post">Poster un article</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/logout">Déconnexion</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/admin/dashboard">Tableau de bord</a>
@@ -30,11 +27,17 @@
             <a class="nav-link" href="/auth/login">Se connecter</a>
           </li>
           <% } %>
-          <li>
-            <% if (user) { %>
-            <p>Salut <%= name %> </p>
-            <% } %>
+          <% if (user) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/profil">Mon compte</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/logout">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Salut <%= name %> </a>
+          </li>
+          <% } %>
         </ul>
       </div>
     </div>

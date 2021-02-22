@@ -81,9 +81,11 @@ app.use("*", (req, res, next) => {
 const admin = require("./routes/adminRoutes");
 const articles = require("./routes/articlesRoute");
 const auth = require("./routes/authRoute");
+const user = require("./routes/userRoute");
 
 app.use("/admin", admin);
 app.use(articles);
+app.use(user);
 app.use("/auth", auth);
 
 app.get("*", function (req, res) {

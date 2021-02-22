@@ -24,7 +24,10 @@ const post_register = async (req, res) => {
 
   // Vérifie si l'email existe
   const findEmail = await query(
-    "SELECT COUNT(*) AS cnt FROM user WHERE email = ?",
+    "SELECT COUNT(email) AS cnt FROM user WHERE email = ?",
+    // ou
+    // SELECT email FROM user WHERE email=?
+    // et if (checkEmail[0].email != email)
     email
   );
 
@@ -73,8 +76,8 @@ const post_register = async (req, res) => {
         [firstname, lastname, email, hashPassword, roles],
         (err, result) => {
           if (err) {
-            // Flash pour récupérer les données saisies par l'utilisateur
-            req.flash("messageError", `Il y a une erreur ${err}`);
+            //   req.flash("messageError", `Il y a une erreur ${err}`);
+            console.log("erreur :", err);
 
             return res.redirect("/auth/register");
           }
@@ -106,7 +109,7 @@ const post_login = async (req, res) => {
   const { email, password } = req.body;
 
   // Vérification de l'email
-  const checkEmail = await query("SELECT * FROM user WHERE email=?", email);
+  const checkEmail = await query("SELECT email FROM user WHERE email=?", email);
 
   if (checkEmail[0].email != email) {
     // console.log("email:", email, "check:", checkEmail[0].email);
