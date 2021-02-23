@@ -2,11 +2,16 @@ const bcrypt = require("bcrypt");
 
 // ------------------- Register -------------------
 const get_register_page = (req, res) => {
+  console.log({ form: req.flash("form") });
+  console.log({ form: req.flash("form")[0] });
+  console.log({ form: req.flash("form")[1] });
+  console.log({ form: req.flash("form")[2] });
   res.render("register", {
     messageEmailUsed: req.flash("messageEmailUsed"),
     messageError: req.flash("messageError"),
     messageFields: req.flash("messageFields"),
     messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
+    form: req.flash("form"),
   });
 };
 
@@ -32,40 +37,42 @@ const post_register = async (req, res) => {
   );
 
   if (findEmail[0].cnt > 0) {
-    req.flash("messageEmailUsed", "Email déjà utilisé");
+    req.flash("messageEmailUsed", "Email déjà utilisée");
+    req.flash("form", form);
+    console.log("0");
+    res.redirect(`/auth/register`);
   }
 
   // Condition pour vérifier que les champs ne sont pas vides
-  if (!firstname || !lastname || !email || !password) {
+  else if (!firstname || !lastname || !email || !password) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
+    req.flash("form", form);
 
-    // TODO : voir pour redirect au lieu de render pour éviter de répéter les messages flash
-    res.render("register", {
-      form,
-      messageEmailUsed: req.flash("messageEmailUsed"),
-      messageError: req.flash("messageError"),
-      messageFields: req.flash("messageFields"),
-      messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
-    });
+    console.log("1");
+    // console.log(form);
+    res.redirect(`/auth/register`);
   }
 
   // Mots de passes non hashés lors de la comparaison
-  if (password != confirmPassword) {
+  else if (password != confirmPassword) {
     req.flash(
       "messageDoubleChekMdp",
       "Les mots de passe ne sont pas identiques."
     );
+    req.flash("form", form);
+    // console.log(form);
 
     // TODO : voir pour redirect au lieu de render pour éviter de répéter les messages flash
-    res.render("register", {
+    /* res.render("register", {
       form,
       messageEmailUsed: req.flash("messageEmailUsed"),
       messageError: req.flash("messageError"),
       messageFields: req.flash("messageFields"),
       messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
-    });
-  } else {
-    // Ajout d'un utilisateur
+    }); */
+    res.redirect(`/auth/register`);
+  } else if (password == confirmPassword) {
+    // Ajout d'un utilisateur et hash du mdp
     try {
       // Hash du mdp
       const saltRounds = 10;
@@ -92,7 +99,10 @@ const post_register = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  } /* else {
+    console.log("mdp pas identiques");
+    res.redirect("/auth/register");
+  } */
 };
 
 // ------------------- Login -------------------

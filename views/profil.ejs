@@ -17,6 +17,15 @@
         <p>Nom : <%= userProfil.lastname %></p>
         <p>Prénom : <%= userProfil.firstname %></p>
         <p>Adresse mail : <%= userProfil.email %></p>
+        <img style="width: 50px;" src="/uploads/profil/<%= userProfil.profilPicture %> ">
+
+        <!-- <form action="/addProfilPicture" method="post" enctype="multipart/form-data">
+            <input class="form-control" type="file" id="formFile" name="image">
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
+        </form> -->
+
     </div>
 </div>
 

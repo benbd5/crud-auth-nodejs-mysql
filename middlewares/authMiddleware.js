@@ -1,5 +1,6 @@
 const get_verify_auth = (req, res, next) => {
   if (req.session.user == undefined) {
+    // ou (!req.session.user) ?
     req.flash(
       "messageNotConnected",
       "Vous devez etre connecté pour accéder à cette page"
