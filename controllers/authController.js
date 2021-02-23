@@ -2,16 +2,17 @@ const bcrypt = require("bcrypt");
 
 // ------------------- Register -------------------
 const get_register_page = (req, res) => {
-  console.log({ form: req.flash("form") });
-  console.log({ form: req.flash("form")[0] });
-  console.log({ form: req.flash("form")[1] });
-  console.log({ form: req.flash("form")[2] });
+  // Faire passer le req.flash dans le req.locals pour récupérer les données
+  res.locals.flashes = req.flash("form")[0];
+
   res.render("register", {
     messageEmailUsed: req.flash("messageEmailUsed"),
     messageError: req.flash("messageError"),
     messageFields: req.flash("messageFields"),
     messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
-    form: req.flash("form"),
+
+    // Données récupérées et injectées dans la vue
+    form: res.locals.flashes,
   });
 };
 
@@ -39,18 +40,15 @@ const post_register = async (req, res) => {
   if (findEmail[0].cnt > 0) {
     req.flash("messageEmailUsed", "Email déjà utilisée");
     req.flash("form", form);
-    console.log("0");
-    res.redirect(`/auth/register`);
+
+    res.redirect(`back`);
   }
 
   // Condition pour vérifier que les champs ne sont pas vides
   else if (!firstname || !lastname || !email || !password) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     req.flash("form", form);
-
-    console.log("1");
-    // console.log(form);
-    res.redirect(`/auth/register`);
+    res.redirect(`back`);
   }
 
   // Mots de passes non hashés lors de la comparaison
@@ -59,18 +57,10 @@ const post_register = async (req, res) => {
       "messageDoubleChekMdp",
       "Les mots de passe ne sont pas identiques."
     );
-    req.flash("form", form);
-    // console.log(form);
 
-    // TODO : voir pour redirect au lieu de render pour éviter de répéter les messages flash
-    /* res.render("register", {
-      form,
-      messageEmailUsed: req.flash("messageEmailUsed"),
-      messageError: req.flash("messageError"),
-      messageFields: req.flash("messageFields"),
-      messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
-    }); */
-    res.redirect(`/auth/register`);
+    req.flash("form", form);
+
+    res.redirect(`back`);
   } else if (password == confirmPassword) {
     // Ajout d'un utilisateur et hash du mdp
     try {
@@ -83,10 +73,9 @@ const post_register = async (req, res) => {
         [firstname, lastname, email, hashPassword, roles],
         (err, result) => {
           if (err) {
-            //   req.flash("messageError", `Il y a une erreur ${err}`);
             console.log("erreur :", err);
 
-            return res.redirect("/auth/register");
+            res.redirect(`back`);
           }
           // Ok inscription effectuée --> redirection vers login
           req.flash(
@@ -153,7 +142,12 @@ const post_login = async (req, res) => {
         role: user[0].roles,
       };
       console.log("session :", req.session.user);
-      res.redirect("/");
+
+      if (req.session.role == "admin") {
+        res.redirect("/admin/dashboard");
+      } else {
+        res.redirect("/");
+      }
     } else {
       req.flash(
         "messageMdpIncorrect",

@@ -38,7 +38,7 @@
         <div class="mb-3">
           <div class="input-group">
             <input type="text" class="form-control form__input" name="lastname" placeholder="Votre nom"
-              value="<%= form.lastname %>">
+              <% if (locals.form) { %> value="<%= locals.form.lastname %>" <% } %>>
           </div>
         </div>
 
