@@ -22,16 +22,6 @@
             <input class="form-control" id="updatePassword" rows="3" type="password" name="password"
                 value="<%= userProfil.password %>">
         </div>
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Photo de profil</label>
-            <input class="form-control" type="file" id="formFile" name="image" value="<%= userProfil.image %> ">
-            <p>Image actuelle :</p>
-            <% if (userProfil.image) { %>
-            <img src="/uploads/<%= userProfil.image %> " class="img-thumbnail" alt="">
-            <% } else { %>
-            <p>Vous n'avez pas encore de photo de profil</p>
-            <% } %>
-        </div>
         <button type="submit" class="btn btn-primary">Modifier</button>
     </form>
 </div>

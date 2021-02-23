@@ -5,7 +5,7 @@ const path = require("path");
 const get_page_profil = async (req, res) => {
   const id = res.locals.user;
   const userProfil = await query(
-    "SELECT firstname, lastname, email, password, userId FROM user WHERE userId = ?",
+    "SELECT firstname, lastname, email, password, profilPicture, userId FROM user WHERE userId = ?",
     id
   );
 
@@ -19,6 +19,7 @@ const get_page_profil = async (req, res) => {
     userProfil: userProfil[0],
     articles,
     messageUpdateSuccess: req.flash("messageUpdateSuccess"),
+    noImage: req.flash("noImage"),
   });
 };
 
@@ -68,40 +69,55 @@ const update_profil = async (req, res) => {
 const post_picture_profil = async (req, res) => {
   const id = res.locals.user;
 
-  const image = req.files.image;
-  const imageName = image.name; // pour récupérer le nom de l'image dans le dossier uploads
+  if (!req.files) {
+    req.flash("noImage", "Veuillez sélectionner une image");
+    res.redirect(`back`);
+  } else {
+    try {
+      const image = req.files.image;
+      const imageName = image.name; // pour récupérer le nom de l'image dans le dossier uploads
+      // TODO : vérifier si path.resolve est utile
+      const fileUpload = path.resolve(
+        __dirname,
+        "..",
+        "public/uploads/profil/",
+        imageName
+      );
 
-  // TODO : vérifier si path.resolve est utile
-  const fileUpload = path.resolve(
-    __dirname,
-    "..",
-    "public/uploads/profil",
-    imageName
-  );
+      // Use the mv() method to place the file somewhere on your server
+      image.mv(fileUpload, function (err) {
+        if (err) return res.status(500).send(err);
 
-  // Use the mv() method to place the file somewhere on your server
-  image.mv(fileUpload, function (err) {
-    if (err) return res.status(500).send(err);
+        console.log("err1", err);
+        res.redirect(`back`);
+      });
 
-    console.log("err");
-    res.redirect("/");
-  });
+      // UPDATE et non INSERT INTO car on modifie la row/ligne de la table dans mysql en ajoutant une photo
+      await query("UPDATE user SET profilPicture = ? WHERE userId = ?", [
+        imageName,
+        id,
+      ]);
 
-  await query("INSERT INTO user (profilPicture) VALUES (?) WHERE userId = ?", [
-    imageName,
-    id,
-  ]);
-
-  console.log(fileUpload);
-  console.log(query);
+      res.redirect(`back`);
+    } catch (err) {
+      console.log("err2", err);
+    }
+  }
+  console.log("ok");
+  res.redirect(`back`);
 };
 
 // Supprimer son compte
 const delete_profil = async (req, res) => {
   const id = res.locals.user;
 
-  // TODO :
-  await query("DELETE /**/ FROM user WHERE userId = ?", id);
+  // Supprime le compte
+  await query("DELETE FROM user WHERE userId = ?", id);
+
+  // Déconnecte pour éviter les erreurs et finaliser la suppression
+  req.session.destroy();
+
+  res.redirect("/");
 };
 
 module.exports = {
@@ -109,4 +125,5 @@ module.exports = {
   get_update_profil,
   update_profil,
   post_picture_profil,
+  delete_profil,
 };

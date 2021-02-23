@@ -16,8 +16,10 @@ router.get(
   userController.get_update_profil
 );
 
+router.put("/addProfilPicture/:id", userController.post_picture_profil);
+
 router.put("/update-profil/:id", userController.update_profil);
 
-router.post("/addProfilPicture", userController.post_picture_profil);
+router.delete("/deleteProfil/:id", userController.delete_profil);
 
 module.exports = router;
