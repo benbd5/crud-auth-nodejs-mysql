@@ -1,6 +1,30 @@
 <%- include('partials/header.ejs') %>
 <%- include('partials/navbar.ejs') %>
 
-<p>test</p>
+<div class="container">
+    <div class="row">
+        <h1 class="text-center"><%= articlesUsers[0].lastname %> <%= articlesUsers[0].firstname %> </h1>
+    </div>
+</div>
+
+<h2><%= totalArticles %> articles liés à cet auteur </h2>
+
+<div class="container">
+    <div class="row">
+        <% articlesUsers.forEach(articlesUsers => { %>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="/uploads/<%= articlesUsers.image %> " class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><%= articlesUsers.titre %> </h5>
+                    <p class="card-text"><%= articlesUsers.description %> </p>
+                    <a href="/liste-des-articles/<%= articlesUsers.articleId %> " class="btn btn-primary">Lire la
+                        suite...</a>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
 
 <%- include('partials/footer.ejs') %>

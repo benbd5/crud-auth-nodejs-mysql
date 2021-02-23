@@ -11,14 +11,18 @@ const get_admin_page = async (req, res) => {
 };
 
 const get_articles_users = async (req, res) => {
-  const id = req.params.id;
-
-  await query(
-    "SELECT titre, image, description, categories, articleId FROM article INNER JOIN user ON article.userId = user.userId WHERE user.userId = ?",
-    id
+  const totalArticles = await query(
+    "SELECT COUNT(*) AS 'Total' FROM user INNER JOIN article ON user.userId = article.userId"
   );
 
-  res.render("listeArticlesUser");
+  const articlesUsers = await query(
+    "SELECT titre, image, description, categories, articleId, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId"
+  );
+
+  res.render("listeArticlesUser", {
+    articlesUsers,
+    totalArticles: totalArticles[0].Total,
+  });
 };
 
 // DELETE profil

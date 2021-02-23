@@ -17,10 +17,10 @@ const get_details_article = async (req, res) => {
   const id = req.params.id;
 
   const singleArticle = await query(
-    "SELECT * FROM article WHERE articleId=?",
+    // "SELECT * FROM article WHERE articleId=?",
+    "SELECT titre, image, description, categories, articleId, user.userId, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE articleId = ?",
     id
   );
-
   res.render("singleArticle", {
     article: singleArticle[0],
   });
