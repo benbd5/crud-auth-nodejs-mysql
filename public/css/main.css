@@ -29,5 +29,6 @@ li {
 
 /* Boutons */
 .btn-primary {
+    border: none;
     background: #aec3bf;
 }

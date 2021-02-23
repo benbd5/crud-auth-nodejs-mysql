@@ -28,6 +28,13 @@ router.get(
   verifyAuth.get_verify_auth,
   articlesController.get_update_article
 );
+
+router.get(
+  "/listeArticlesUser/:id",
+  verifyAuth.get_verify_auth,
+  articlesController.get_articles_users
+);
+
 router.put(
   "/update-article/:id",
   verifyAuth.get_verify_auth,

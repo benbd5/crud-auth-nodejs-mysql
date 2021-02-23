@@ -12,12 +12,6 @@ router.get(
   adminController.get_admin_page
 );
 
-router.get(
-  "/listeArticlesUser/:id",
-  verifyAuth.get_verify_auth,
-  adminController.get_articles_users
-);
-
 router.delete(
   "/deleteUser/:id",
   verifyAuth.verify_role,

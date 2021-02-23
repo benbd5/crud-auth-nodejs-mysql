@@ -1,6 +1,13 @@
 <%- include('partials/header.ejs') %>
 <%- include('partials/navbar.ejs') %>
 
+<!-- Erreur : les champs ne sont pas tous remplis -->
+<% if (messageFields.length > 0) { %>
+<div class="alert alert-danger" role="alert">
+    <%= messageFields %>
+</div>
+<% } %>
+
 <form action="/send" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
