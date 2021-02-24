@@ -84,9 +84,9 @@ const auth = require("./routes/authRoute");
 const user = require("./routes/userRoute");
 
 app.use("/admin", admin);
-app.use(articles);
-app.use(user);
 app.use("/auth", auth);
+app.use(user);
+app.use(articles);
 
 app.get("*", function (req, res) {
   res.render("404");

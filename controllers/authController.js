@@ -88,10 +88,7 @@ const post_register = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  } /* else {
-    console.log("mdp pas identiques");
-    res.redirect("/auth/register");
-  } */
+  }
 };
 
 // ------------------- Login -------------------

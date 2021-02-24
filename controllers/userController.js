@@ -87,9 +87,6 @@ const post_picture_profil = async (req, res) => {
       // Use the mv() method to place the file somewhere on your server
       image.mv(fileUpload, function (err) {
         if (err) return res.status(500).send(err);
-
-        console.log("err1", err);
-        res.redirect(`back`);
       });
 
       // UPDATE et non INSERT INTO car on modifie la row/ligne de la table dans mysql en ajoutant une photo
@@ -103,8 +100,6 @@ const post_picture_profil = async (req, res) => {
       console.log("err2", err);
     }
   }
-  console.log("ok");
-  res.redirect(`back`);
 };
 
 // Supprimer son compte
