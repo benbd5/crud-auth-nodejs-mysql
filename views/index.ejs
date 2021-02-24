@@ -10,6 +10,13 @@
   </div>
   <% } %>
 
+  <!-- Déjà connecté -->
+  <% if (alreadyConnected.length > 0) { %>
+  <div class="alert alert-info" role="alert">
+    <%= alreadyConnected %>
+  </div>
+  <% } %>
+
   <div class="row">
 
     <% listArticles.forEach(article => { %>

@@ -5,15 +5,20 @@ const get_register_page = (req, res) => {
   // Faire passer le req.flash dans le req.locals pour récupérer les données
   res.locals.flashes = req.flash("form")[0];
 
-  res.render("register", {
-    messageEmailUsed: req.flash("messageEmailUsed"),
-    messageError: req.flash("messageError"),
-    messageFields: req.flash("messageFields"),
-    messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
+  if (!res.locals.user) {
+    res.render("register", {
+      messageEmailUsed: req.flash("messageEmailUsed"),
+      messageError: req.flash("messageError"),
+      messageFields: req.flash("messageFields"),
+      messageDoubleChekMdp: req.flash("messageDoubleChekMdp"),
 
-    // Données récupérées et injectées dans la vue
-    form: res.locals.flashes,
-  });
+      // Données récupérées et injectées dans la vue
+      form: res.locals.flashes,
+    });
+  } else {
+    req.flash("alreadyConnected", "Vous êtes déjà connecté !");
+    res.redirect(`back`);
+  }
 };
 
 const post_register = async (req, res) => {
@@ -93,12 +98,17 @@ const post_register = async (req, res) => {
 
 // ------------------- Login -------------------
 const get_login_page = (req, res) => {
-  res.render("login", {
-    messageRegisterSuccess: req.flash("messageRegisterSuccess"),
-    messageEmailIncorrect: req.flash("messageEmailIncorrect"),
-    messageNotConnected: req.flash("messageNotConnected"),
-    messageMdpIncorrect: req.flash("messageMdpIncorrect"),
-  });
+  if (!res.locals.user) {
+    res.render("login", {
+      messageRegisterSuccess: req.flash("messageRegisterSuccess"),
+      messageEmailIncorrect: req.flash("messageEmailIncorrect"),
+      messageNotConnected: req.flash("messageNotConnected"),
+      messageMdpIncorrect: req.flash("messageMdpIncorrect"),
+    });
+  } else {
+    req.flash("alreadyConnected", "Vous êtes déjà connecté !");
+    res.redirect(`back`);
+  }
 };
 
 const post_login = async (req, res) => {

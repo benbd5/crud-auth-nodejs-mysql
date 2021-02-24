@@ -11,6 +11,7 @@ const get_list_article = async (req, res) => {
   res.render("index", {
     listArticles,
     messageNotAdmin: req.flash("messageNotAdmin"),
+    alreadyConnected: req.flash("alreadyConnected"),
   });
 };
 
