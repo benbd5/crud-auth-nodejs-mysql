@@ -17,6 +17,7 @@ router.get(
 );
 
 router.put("/addProfilPicture/:id", userController.post_picture_profil);
+router.delete("/deleteProfilPicture/:id", userController.delete_picture_profil);
 
 router.put("/update-profil/:id", userController.update_profil);
 

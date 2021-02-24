@@ -29,10 +29,17 @@
         <p>Adresse mail : <%= userProfil.email %></p>
         <img style="width: 50px;" src="/uploads/profil/<%= userProfil.profilPicture %> ">
 
+        <!-- Ajouter une photo de profil -->
         <form action="/addProfilPicture/<%= userProfil.userId %>?_method=PUT" method="post"
             enctype="multipart/form-data">
             <input class="form-control" type="file" id="formFile" name="image">
             <button class="btn btn-primary" type="submit">Ajouter</button>
+        </form>
+
+        <!-- Supprimer une photo de profil -->
+        <form action="/deleteProfilPicture/<%= userProfil.userId %>?_method=DELETE" method="post"
+            enctype="multipart/form-data">
+            <button class="btn btn-danger" type="submit">Supprimer votre photo de profil</button>
         </form>
     </div>
 

@@ -1,3 +1,6 @@
+const path = require("path");
+const fs = require("fs");
+
 const get_admin_page = async (req, res) => {
   // const id = req.params.id;
 
@@ -15,6 +18,32 @@ const get_admin_page = async (req, res) => {
 // DELETE profil
 const delete_profil = async (req, res) => {
   const id = req.params.id;
+
+  // Supprimer les images du dossier pour éviter de stocker des documents inutiles
+  const imageNamePath = await query(
+    "SELECT profilPicture FROM user WHERE userId = ?",
+    id
+  );
+
+  if (imageNamePath.length > 1) {
+    /* On récupère l'image (profilPicture) de mysql qui nous ressort un objet :
+     * [ RowDataPacket { profilPicture: 'leash-bodyboard-pride-tristant-robert-grey.jpg'} ]
+     * Puis on récupère l'image dans l'objet
+     */
+    const imageName = imageNamePath[0].profilPicture;
+    const pathFile = path.resolve(
+      __dirname,
+      "../public/uploads/profil/",
+      imageName
+    );
+
+    fs.unlink(pathFile, (err) => {
+      if (err) console.log(err);
+      console.log(pathFile, "pathFile was deleted");
+    });
+    // Fin de la requête de supression des images dans le dossier
+  }
+
   await query("DELETE FROM user WHERE userId = ?", [id]);
   console.log("user deleted");
   res.redirect("/admin/dashboard");

@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const fileupload = require("express-fileupload");
 const path = require("path");
+const fs = require("fs");
 
 const get_page_profil = async (req, res) => {
   const id = res.locals.user;
@@ -102,9 +103,71 @@ const post_picture_profil = async (req, res) => {
   }
 };
 
+// Suppression par l'utilisateur de sa photo de profil
+const delete_picture_profil = async (req, res) => {
+  const id = res.locals.user;
+  // Supprimer les images du dossier pour éviter de stocker des documents inutiles
+  const imageNamePath = await query(
+    "SELECT profilPicture FROM user WHERE userId = ?",
+    id
+  );
+
+  if (imageNamePath[0].profilPicture.length > 1) {
+    try {
+      const imageName = imageNamePath[0].profilPicture;
+      const pathFile = path.resolve(
+        __dirname,
+        "../public/uploads/profil/",
+        imageName
+      );
+
+      fs.unlink(pathFile, (err) => {
+        if (err) console.log(err);
+        console.log(pathFile, "pathFile was deleted");
+      });
+      // Fin de la requête de supression des images dans le dossier
+      res.redirect(`back`);
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    res.redirect(`back`);
+    console.log("Erreur lors de la suppression de votre photo de profil");
+  }
+};
+
 // Supprimer son compte
 const delete_profil = async (req, res) => {
   const id = res.locals.user;
+
+  // Supprimer les images du dossier pour éviter de stocker des documents inutiles
+  const imageNamePath = await query(
+    "SELECT profilPicture FROM user WHERE userId = ?",
+    id
+  );
+
+  if (imageNamePath[0].profilPicture.length > 1) {
+    try {
+      /* On récupère l'image (profilPicture) de mysql qui nous ressort un objet :
+       * [ RowDataPacket { profilPicture: 'leash-bodyboard-pride-tristant-robert-grey.jpg'} ]
+       * Puis on récupère l'image dans l'objet
+       */
+      const imageName = imageNamePath[0].profilPicture;
+      const pathFile = path.resolve(
+        __dirname,
+        "../public/uploads/profil/",
+        imageName
+      );
+
+      fs.unlink(pathFile, (err) => {
+        if (err) console.log(err);
+        console.log(pathFile, "pathFile was deleted");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    // Fin de la requête de supression des images dans le dossier
+  }
 
   // Supprime le compte
   await query("DELETE FROM user WHERE userId = ?", id);
@@ -121,4 +184,5 @@ module.exports = {
   update_profil,
   post_picture_profil,
   delete_profil,
+  delete_picture_profil,
 };

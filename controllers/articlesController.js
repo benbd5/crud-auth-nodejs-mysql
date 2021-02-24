@@ -1,6 +1,7 @@
 // Fileupload pour les images et path pour déplcacer les images dans le dossier upload
 const fileupload = require("express-fileupload");
 const path = require("path");
+const fs = require("fs");
 
 // -------------------------- LISTE --------------------------
 const get_list_article = async (req, res) => {
@@ -135,8 +136,24 @@ const update_article = async (req, res) => {
 // -------------------------- DELETE --------------------------
 const delete_articles = async (req, res) => {
   const id = req.params.id;
+  console.log("Article supprimé");
+
+  // Supprimer les images du dossier pour éviter de stocker des documents inutiles
+  const imageNamePath = await query(
+    "SELECT image FROM article WHERE articleId = ?",
+    id
+  );
+
+  const imageName = imageNamePath[0].image;
+  const pathFile = path.resolve(__dirname, "../public/uploads/", imageName);
+
+  fs.unlink(pathFile, (err) => {
+    if (err) console.log(err);
+    console.log(pathFile, "pathFile was deleted");
+  });
+  // Fin de la requête de supression des images dans le dossier
+
   await query("DELETE FROM article WHERE articleId=?", [id]);
-  console.log("Supprimé");
 
   if (res.locals.role == "user") {
     res.redirect("/profil");
