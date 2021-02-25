@@ -56,7 +56,6 @@ const get_post_page = (req, res) => {
 // Poster un article
 const post_article = async (req, res) => {
   const { titre, description, categories } = req.body;
-  const image = req.files.image;
 
   const userId = res.locals.user;
 
@@ -64,9 +63,9 @@ const post_article = async (req, res) => {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     res.redirect(`back`);
   } else {
+    const image = req.files.image;
     const imageName = image.name; // pour récupérer le nom de l'image dans le dossier uploads
 
-    // TODO : vérifier si path.resolve est utile
     const fileUpload = path.resolve(
       __dirname,
       "..",
