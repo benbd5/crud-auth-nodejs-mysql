@@ -9,22 +9,25 @@
 
       <!-- Email déjà utilisé -->
       <% if (messageEmailUsed.length > 0) { %>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= messageEmailUsed %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
 
       <!-- Tous les champs ne sont pas remplis -->
       <% if (messageFields.length > 0) { %>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= messageFields %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
 
       <!-- Les mots de passe ne sont pas identiques -->
       <% if (messageDoubleChekMdp.length > 0) { %>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= messageDoubleChekMdp %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
 

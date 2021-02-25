@@ -10,29 +10,33 @@
 
       <!-- Inscrit avec succès -->
       <% if (messageRegisterSuccess.length > 0) { %>
-      <div class="alert alert-success" role="alert">
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
         <%= messageRegisterSuccess %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
 
       <!-- Email incorrect -->
       <% if (messageEmailIncorrect.length > 0) { %>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= messageEmailIncorrect %> <a href="/auth/register">ici</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
 
       <!-- Message de redirection après tentative d'accès à une page non autorisée -->
       <% if (messageNotConnected.length > 0) { %>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= messageNotConnected %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
 
       <!-- Mdp incorrect -->
       <% if (messageMdpIncorrect.length > 0) { %>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= messageMdpIncorrect %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
 

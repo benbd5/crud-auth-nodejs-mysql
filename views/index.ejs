@@ -5,15 +5,17 @@
 
   <!-- Mdp incorrect -->
   <% if (messageNotAdmin.length > 0) { %>
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <%= messageNotAdmin %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   <% } %>
 
   <!-- Déjà connecté -->
   <% if (alreadyConnected.length > 0) { %>
-  <div class="alert alert-info" role="alert">
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <%= alreadyConnected %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   <% } %>
 
@@ -40,6 +42,5 @@
 
   </div>
 </div>
-
 
 <%- include('partials/footer.ejs') %>
