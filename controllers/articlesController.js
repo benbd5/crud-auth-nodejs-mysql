@@ -57,9 +57,10 @@ const get_post_page = (req, res) => {
 const post_article = async (req, res) => {
   const { titre, description, categories } = req.body;
 
+  // const image = req.files.image;
   const userId = res.locals.user;
 
-  if (!titre || !description || !image) {
+  if (!titre || !description || !req.files.image) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     res.redirect(`back`);
   } else {

@@ -23,7 +23,7 @@
         <a href="/updateProfil/<%= userProfil.userId %> ">
             Modifier le profil
         </a>
-        <form action="/deleteProfil/<%= userProfil.userId %>?_method=DELETE" method="POST">
+        <form class="formDelete" action="/deleteProfil/<%= userProfil.userId %>?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-danger">Supprimer</button>
         </form>
         <p>Nom : <%= userProfil.lastname %></p>
@@ -39,9 +39,9 @@
         </form>
 
         <!-- Supprimer une photo de profil -->
-        <form action="/deleteProfilPicture/<%= userProfil.userId %>?_method=DELETE" method="post"
+        <form class="formDelete" action="/deleteProfilPicture/<%= userProfil.userId %>?_method=DELETE" method="post"
             enctype="multipart/form-data">
-            <button class="btn btn-danger" type="submit">Supprimer votre photo de profil</button>
+            <button type="submit" class="btn btn-danger">Supprimer votre photo de profil</button>
         </form>
     </div>
 
@@ -76,7 +76,8 @@
                             <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
                         </td>
                         <td>
-                            <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
+                            <form class="formDelete" action="/delete/<%= article.articleId %>?_method=DELETE"
+                                method="POST">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>
                         </td>
