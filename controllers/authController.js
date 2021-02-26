@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 
 // ------------------- Register -------------------
+// Affiche la page inscription
 const get_register_page = (req, res) => {
   // Faire passer le req.flash dans le req.locals pour récupérer les données
   res.locals.flashes = req.flash("form")[0];
@@ -21,6 +22,7 @@ const get_register_page = (req, res) => {
   }
 };
 
+// S'inscrire
 const post_register = async (req, res) => {
   const { firstname, lastname, email, password, confirmPassword } = req.body;
 
@@ -56,7 +58,7 @@ const post_register = async (req, res) => {
     res.redirect(`back`);
   }
 
-  // Mots de passes non hashés lors de la comparaison
+  // Mots de passes non hashés lors de la comparaison --> à modifier
   else if (password != confirmPassword) {
     req.flash(
       "messageDoubleChekMdp",
@@ -97,6 +99,7 @@ const post_register = async (req, res) => {
 };
 
 // ------------------- Login -------------------
+// Affiche la page connexion
 const get_login_page = (req, res) => {
   if (!res.locals.user) {
     res.render("login", {
@@ -111,6 +114,7 @@ const get_login_page = (req, res) => {
   }
 };
 
+// Se connecter
 const post_login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -148,7 +152,7 @@ const post_login = async (req, res) => {
         email: user[0].email,
         role: user[0].roles,
       };
-      console.log("session :", req.session.user);
+      // console.log("session :", req.session.user);
 
       if (req.session.role == "admin") {
         res.redirect("/admin/dashboard");

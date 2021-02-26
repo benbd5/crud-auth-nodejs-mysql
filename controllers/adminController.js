@@ -1,9 +1,8 @@
 const path = require("path");
 const fs = require("fs");
 
+// GET page admin
 const get_admin_page = async (req, res) => {
-  // const id = req.params.id;
-
   const articles = await query(
     "SELECT articleId, titre, description, image, userId FROM article"
   );
@@ -37,6 +36,7 @@ const delete_profil = async (req, res) => {
       imageName
     );
 
+    // Fonction qui supprime les fichiers
     fs.unlink(pathFile, (err) => {
       if (err) console.log(err);
       console.log(pathFile, "pathFile was deleted");

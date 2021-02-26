@@ -37,6 +37,8 @@ for (let i = 0; i < alerte.length; i++) {
       .then((result) => {
         if (result.isConfirmed) {
           deleteSwal.fire("Supprimé !", "Suppression effectuée.", "success");
+
+          // Envoi du formulaire en cas de confirmation par l'utilisateur
           alerte[i].submit();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           deleteSwal.fire(

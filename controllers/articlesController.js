@@ -3,7 +3,8 @@ const fileupload = require("express-fileupload");
 const path = require("path");
 const fs = require("fs");
 
-// -------------------------- LISTE --------------------------
+// -------------------------- GET Articles --------------------------
+// Liste des articles
 const get_list_article = async (req, res) => {
   const listArticles = await query(
     "SELECT article.titre, article.description, article.image, article.categories, article.articleId FROM article"
@@ -15,6 +16,7 @@ const get_list_article = async (req, res) => {
   });
 };
 
+// Affiche un seul article
 const get_details_article = async (req, res) => {
   const id = req.params.id;
 
@@ -47,7 +49,7 @@ const get_articles_users = async (req, res) => {
   });
 };
 
-// -------------------------- POST --------------------------
+// -------------------------- POST articles --------------------------
 // Afficher la page post des articles
 const get_post_page = (req, res) => {
   res.render("post", { messageFields: req.flash("messageFields") });
@@ -87,7 +89,7 @@ const post_article = async (req, res) => {
   }
 };
 
-// -------------------------- UPDATE --------------------------
+// -------------------------- UPDATE article --------------------------
 // Affiche la page de modification des articles
 const get_update_article = async (req, res) => {
   const id = req.params.id;
@@ -134,7 +136,7 @@ const update_article = async (req, res) => {
   }
 };
 
-// -------------------------- DELETE --------------------------
+// -------------------------- DELETE article --------------------------
 const delete_articles = async (req, res) => {
   const id = req.params.id;
   console.log("Article supprimé");
@@ -156,6 +158,7 @@ const delete_articles = async (req, res) => {
 
   await query("DELETE FROM article WHERE articleId=?", [id]);
 
+  // Redirection après la suppression
   if (res.locals.role == "user") {
     res.redirect("/profil");
   } else if (res.locals.role == "admin") {

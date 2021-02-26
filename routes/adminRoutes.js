@@ -12,6 +12,7 @@ router.get(
   adminController.get_admin_page
 );
 
+// DELETE utilisateur
 router.delete(
   "/deleteUser/:id",
   verifyAuth.verify_role,

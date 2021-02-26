@@ -3,6 +3,7 @@ const fileupload = require("express-fileupload");
 const path = require("path");
 const fs = require("fs");
 
+// Affiche la page profil
 const get_page_profil = async (req, res) => {
   const id = res.locals.user;
   const userProfil = await query(
@@ -24,6 +25,7 @@ const get_page_profil = async (req, res) => {
   });
 };
 
+// Affiche la page de modification du profil
 const get_update_profil = async (req, res) => {
   const id = res.locals.user;
 
@@ -36,10 +38,12 @@ const get_update_profil = async (req, res) => {
   });
 };
 
+// Modifier le profil
 const update_profil = async (req, res) => {
   const { lastname, firstname, email, password } = req.body;
   const id = res.locals.user;
 
+  // Re hasher le mdp lors de la modification
   try {
     // Hash du mdp
     const saltRounds = 10;
@@ -67,6 +71,7 @@ const update_profil = async (req, res) => {
   res.redirect("/profil");
 };
 
+// Ajouter une photo de profil
 const post_picture_profil = async (req, res) => {
   const id = res.locals.user;
 
@@ -136,7 +141,7 @@ const delete_picture_profil = async (req, res) => {
   }
 };
 
-// Supprimer son compte
+// Suppression de son compte
 const delete_profil = async (req, res) => {
   const id = res.locals.user;
 
