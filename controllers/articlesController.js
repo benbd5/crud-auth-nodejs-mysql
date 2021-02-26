@@ -41,7 +41,7 @@ const get_articles_users = async (req, res) => {
   );
 
   const articlesUsers = await query(
-    "SELECT titre, image, description, categories, articleId, dateAjout, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE user.userId = ?",
+    "SELECT titre, image, description, categories, articleId, dateAjout, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE user.userId = ? ORDER BY dateAjout DESC",
     id
   );
 

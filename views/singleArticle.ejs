@@ -11,6 +11,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><%= article.titre %> </h5>
                     <p class="card-text"><%= article.description %> </p>
+                    <p class="card-text"> Publié le : <%= moment(article.dateAjout).format('DD/MM/YYYY') %> </p>
                     <a href="/listeArticlesUser/<%= article.userId %> "><%= article.firstname %> </a>
                 </div>
             </div>
