@@ -32,9 +32,11 @@
           <h2 class="card-title"><%= article.titre %> </h2>
           <p class="card-text"><%= article.description %> </p>
           <p class="category_articles"><%= article.categories %> </p>
+          <p class="dateAjout">Publié le : <%= moment(article.dateAjout).format('DD/MM/YYYY') %> </p>
           <p><%= article.userId %> </p>
         </div>
-        <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Lire la suite...</a>
+        <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Lire la
+          suite...</a>
       </div>
     </div>
 

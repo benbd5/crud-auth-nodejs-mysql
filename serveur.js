@@ -8,6 +8,7 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   fileupload = require("express-fileupload"),
   methodOverride = require("method-override"),
+  moment = require("moment"),
   mysql = require("mysql");
 
 // Dotenv
@@ -66,6 +67,9 @@ app.use(flash());
 
 // Pour les images
 app.use(fileupload());
+
+// Pour les formats de date
+app.locals.moment = require("moment");
 
 // Pour identifier l'utilisateur connecté sur toutes les pages du site
 app.use("*", (req, res, next) => {

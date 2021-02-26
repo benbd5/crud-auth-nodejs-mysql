@@ -7,7 +7,7 @@ const fs = require("fs");
 // Liste des articles
 const get_list_article = async (req, res) => {
   const listArticles = await query(
-    "SELECT article.titre, article.description, article.image, article.categories, article.articleId FROM article"
+    "SELECT article.titre, article.description, article.image, article.categories, article.dateAjout, article.articleId FROM article"
   );
   res.render("index", {
     listArticles,
@@ -21,7 +21,7 @@ const get_details_article = async (req, res) => {
   const id = req.params.id;
 
   const singleArticle = await query(
-    "SELECT titre, image, description, categories, articleId, user.userId, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE articleId = ?",
+    "SELECT titre, image, description, categories, dateAjout, articleId, user.userId, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE articleId = ?",
     id
   );
   res.render("singleArticle", {
@@ -39,7 +39,7 @@ const get_articles_users = async (req, res) => {
   );
 
   const articlesUsers = await query(
-    "SELECT titre, image, description, categories, articleId, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE user.userId = ?",
+    "SELECT titre, image, description, categories, articleId, dateAjout, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE user.userId = ?",
     id
   );
 
@@ -57,7 +57,7 @@ const get_post_page = (req, res) => {
 
 // Poster un article
 const post_article = async (req, res) => {
-  const { titre, description, categories } = req.body;
+  const { titre, description, dateAjout } = req.body;
 
   // const image = req.files.image;
   const userId = res.locals.user;
@@ -82,8 +82,8 @@ const post_article = async (req, res) => {
     });
 
     await query(
-      "INSERT INTO article (titre, description, image, userId) VALUES (?,?,?,?)",
-      [titre, description, imageName, userId]
+      "INSERT INTO article (titre, description, image, dateAjout, userId) VALUES (?,?,?,?,?)",
+      [titre, description, imageName, dateAjout, userId]
     );
     res.redirect("/profil");
   }
