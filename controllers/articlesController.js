@@ -6,9 +6,11 @@ const fs = require("fs");
 // -------------------------- GET Articles --------------------------
 // Liste des articles
 const get_list_article = async (req, res) => {
-  const listArticles = await query(
-    "SELECT article.titre, article.description, article.image, article.categories, article.dateAjout, article.articleId FROM article"
+  let listArticles = await query(
+    "SELECT article.titre, article.description, article.image, article.categories, article.dateAjout, article.articleId FROM article ORDER BY dateAjout DESC"
   );
+  // ORDER BY DESC pour récupérer les articles les plus récents d'abord
+
   res.render("index", {
     listArticles,
     messageNotAdmin: req.flash("messageNotAdmin"),
