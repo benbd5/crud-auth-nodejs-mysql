@@ -4,7 +4,7 @@ const fs = require("fs");
 // GET page admin
 const get_admin_page = async (req, res) => {
   const articles = await query(
-    "SELECT articleId, titre, description, image, userId FROM article"
+    "SELECT articleId, titre, description, image, dateAjout, userId FROM article ORDER BY dateAjout DESC"
   );
 
   const users = await query(

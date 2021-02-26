@@ -56,8 +56,9 @@
                 <thead>
                     <tr>
                         <th scope="col">id</th>
-                        <th scope="col">Photos</th>
-                        <th scope="col">Noms</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Date de publication</th>
                         <th scope="col">Détails</th>
                         <th scope="col">Modifier</th>
                         <th scope="col">Supprimer</th>
@@ -69,6 +70,7 @@
                         <th scope="row"><%= article.articleId %></th>
                         <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
                         <td><%= article.titre %></td>
+                        <td><%= moment(article.dateAjout).format('DD/MM/YYYY') %></td>
                         <td>
                             <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Détails</a>
                         </td>
