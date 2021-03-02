@@ -1,15 +1,14 @@
 /* Boutons */
-.btn-primary {
-    border: none;
+.btn-card {
     color: black;
-    background: #f8f8f8;
+    background: #ffffff;
+    border-top: 0.05px solid #aec3bf;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     transition: 0.5s;
 }
 
-.btn-primary:hover {
-
+.btn-card:hover {
     background: #aec3bf;
 }
 
