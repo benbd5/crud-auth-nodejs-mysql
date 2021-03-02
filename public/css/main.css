@@ -1,13 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Imbue:wght@300;700;900&display=swap');
-@import 'shared/articles.css';
-@import 'shared/navbar.css';
-@import 'shared/dashboard.css';
-@import 'shared/accueil.css';
-@import 'shared/buttons.css';
-@import 'shared/footer.css';
-@import 'shared/singleArticle.css';
-@import 'shared/profil.css';
-
+@import url("https://fonts.googleapis.com/css2?family=Imbue:wght@300;700;900&display=swap");
+@import "shared/articles.css";
+@import "shared/navbar.css";
+@import "shared/dashboard.css";
+@import "shared/accueil.css";
+@import "shared/buttons.css";
+@import "shared/footer.css";
+@import "shared/singleArticle.css";
+@import "shared/profil.css";
 
 *,
 *::before,
@@ -28,35 +27,20 @@ body {
 p,
 a,
 li {
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 16px
+    font-family: "Frank Ruhl Libre", serif;
+    font-size: 16px;
 }
 
-/* ds */
-.btn-file {
-    position: relative;
-    overflow: hidden;
+hr {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
 }
 
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
+/* Wave SVG background*/
+body {
+    background-image: url("/images/wave2.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
     min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    background: red;
-    cursor: inherit;
-    display: block;
-}
-
-.file-input-label {
-    padding: 0px 10px;
-    display: table-cell;
-    vertical-align: middle;
-    border: 1px solid #ddd;
-    border-radius: 4px;
 }
