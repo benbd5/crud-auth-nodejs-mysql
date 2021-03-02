@@ -42,11 +42,7 @@ router.put(
 );
 
 // Affiche tous les articles de l'utilisateur sélectionné
-router.get(
-  "/listeArticlesUser/:id",
-  verifyAuth.get_verify_auth,
-  articlesController.get_articles_users
-);
+router.get("/listeArticlesUser/:id", articlesController.get_articles_users);
 
 // SUPPRIMER les articles
 router.delete(
