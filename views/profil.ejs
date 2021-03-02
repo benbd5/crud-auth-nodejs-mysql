@@ -19,7 +19,7 @@
     </div>
     <% } %>
 
-    <div class="row">
+    <div class="row" id="profil-user">
 
         <div class="profil-details">
 
@@ -44,11 +44,13 @@
                 </form>
             </div>
 
+            <hr>
+
             <div class="profil-infos">
                 <h2 class="text-center">Détails de votre profil</h2>
-                <p>Nom : <%= userProfil.lastname %></p>
-                <p>Prénom : <%= userProfil.firstname %></p>
-                <p>Adresse mail : <%= userProfil.email %></p>
+                <p class="text-infos-profil"><span> Nom :</span> <%= userProfil.lastname %></p>
+                <p class="text-infos-profil"><span>Prénom :</span> <%= userProfil.firstname %></p>
+                <p class="text-infos-profil"><span>Adresse mail :</span> <%= userProfil.email %></p>
             </div>
 
             <div class="profil-update-delete">
@@ -62,6 +64,7 @@
         </div>
     </div>
 
+    <hr>
 
     <div class="row">
         <div class="history-articles-user">
@@ -82,6 +85,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% if (articles.length < 1) { %>
+                            <tr>
+                                <td>
+                                    Vous n'avez pas encore publié
+                                </td>
+                            </tr>
+                            <% } %>
                             <% articles.forEach(article => { %>
                             <tr>
                                 <th scope="row"><%= article.articleId %></th>
