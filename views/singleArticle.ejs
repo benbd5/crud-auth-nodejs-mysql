@@ -5,14 +5,18 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img src="/uploads/<%= article.image %> " class="card-img-top" alt="...">
-                <div class="card-body">
+        <div class="d-flex justify-content-center" id="article-column">
+            <div class="col-lg-7" id="article-gutter">
+                <img src="/uploads/<%= article.image %> " class="single-article-image" alt="...">
+            </div>
+            <div class="col-lg-5" id="test">
+                <div class="test">
                     <h5 class="card-title"><%= article.titre %> </h5>
                     <p class="card-text"><%= article.description %> </p>
                     <p class="card-text"> Publié le : <%= moment(article.dateAjout).format('DD/MM/YYYY') %> </p>
-                    <a href="/listeArticlesUser/<%= article.userId %> "><%= article.firstname %> </a>
+                    <p>Publié par : <a href="/listeArticlesUser/<%= article.userId %> "><%= article.firstname %>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>

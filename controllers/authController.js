@@ -107,6 +107,7 @@ const get_login_page = (req, res) => {
       messageEmailIncorrect: req.flash("messageEmailIncorrect"),
       messageNotConnected: req.flash("messageNotConnected"),
       messageMdpIncorrect: req.flash("messageMdpIncorrect"),
+      messageFields: req.flash("messageFields"),
     });
   } else {
     req.flash("alreadyConnected", "Vous êtes déjà connecté !");
@@ -120,6 +121,11 @@ const post_login = async (req, res) => {
 
   // Vérification de l'email
   const checkEmail = await query("SELECT email FROM user WHERE email=?", email);
+
+  if (!email || !password) {
+    req.flash("messageFields", "Veuillez remplir tous les champs.");
+    res.redirect(`back`);
+  }
 
   if (checkEmail[0].email != email) {
     // console.log("email:", email, "check:", checkEmail[0].email);

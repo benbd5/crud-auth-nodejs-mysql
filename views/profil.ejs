@@ -20,73 +20,94 @@
     <% } %>
 
     <div class="row">
-        <a href="/updateProfil/<%= userProfil.userId %> ">
-            Modifier le profil
-        </a>
-        <form class="formDelete" action="/deleteProfil/<%= userProfil.userId %>?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-danger">Supprimer</button>
-        </form>
-        <p>Nom : <%= userProfil.lastname %></p>
-        <p>Prénom : <%= userProfil.firstname %></p>
-        <p>Adresse mail : <%= userProfil.email %></p>
-        <img style="width: 50px;" src="/uploads/profil/<%= userProfil.profilPicture %> ">
 
-        <!-- Ajouter une photo de profil -->
-        <form action="/addProfilPicture/<%= userProfil.userId %>?_method=PUT" method="post"
-            enctype="multipart/form-data">
-            <input class="form-control" type="file" id="formFile" name="image">
-            <button class="btn btn-primary" type="submit">Ajouter</button>
-        </form>
+        <div class="profil-details">
 
-        <!-- Supprimer une photo de profil -->
-        <form class="formDelete" action="/deleteProfilPicture/<%= userProfil.userId %>?_method=DELETE" method="post"
-            enctype="multipart/form-data">
-            <button type="submit" class="btn btn-danger">Supprimer votre photo de profil</button>
-        </form>
+            <img src="/uploads/profil/<%= userProfil.profilPicture %> " class="photo-profil">
+
+            <div class="form-photo-profil">
+                <!-- Ajouter une photo de profil -->
+                <form action="/addProfilPicture/<%= userProfil.userId %>?_method=PUT" method="post"
+                    enctype="multipart/form-data" class="profil-form-picture">
+                    <span class="file-input btn btn-primary btn-file">
+                        Choisir...
+                        <input class="form-control" type="file" id="formFile" name="image">
+                    </span>
+                    <button class="btn btn-primary" type="submit">Ajouter</button>
+                </form>
+
+                <!-- Supprimer une photo de profil -->
+                <form id="delete-profil-picture" class="formDelete text-center"
+                    action="/deleteProfilPicture/<%= userProfil.userId %>?_method=DELETE" method="post"
+                    enctype="multipart/form-data">
+                    <button type="submit" class="btn btn-danger">Supprimer votre photo de profil</button>
+                </form>
+            </div>
+
+            <div class="profil-infos">
+                <h2 class="text-center">Détails de votre profil</h2>
+                <p>Nom : <%= userProfil.lastname %></p>
+                <p>Prénom : <%= userProfil.firstname %></p>
+                <p>Adresse mail : <%= userProfil.email %></p>
+            </div>
+
+            <div class="profil-update-delete">
+                <a href="/updateProfil/<%= userProfil.userId %> " class="btn btn-warning">
+                    Modifier le profil
+                </a>
+                <form class="formDelete" action="/deleteProfil/<%= userProfil.userId %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-</div>
-</div>
 
-<div class="container">
     <div class="row">
-        <h2>Historique des articles</h2>
-        <div class="col">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">Photo</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Date de publication</th>
-                        <th scope="col">Détails</th>
-                        <th scope="col">Modifier</th>
-                        <th scope="col">Supprimer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% articles.forEach(article => { %>
-                    <tr>
-                        <th scope="row"><%= article.articleId %></th>
-                        <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
-                        <td><%= article.titre %></td>
-                        <td><%= moment(article.dateAjout).format('DD/MM/YYYY') %></td>
-                        <td>
-                            <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Détails</a>
-                        </td>
-                        <td>
-                            <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
-                        </td>
-                        <td>
-                            <form class="formDelete" action="/delete/<%= article.articleId %>?_method=DELETE"
-                                method="POST">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+        <div class="history-articles-user">
+
+            <h2 class="text-center">Historique des articles</h2>
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Photo</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Date de publication</th>
+                                <th scope="col">Détails</th>
+                                <th scope="col">Modifier</th>
+                                <th scope="col">Supprimer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% articles.forEach(article => { %>
+                            <tr>
+                                <th scope="row"><%= article.articleId %></th>
+                                <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
+                                <td><%= article.titre %></td>
+                                <td><%= moment(article.dateAjout).format('DD/MM/YYYY') %></td>
+                                <td>
+                                    <a href="/liste-des-articles/<%= article.articleId %> "
+                                        class="btn btn-primary">Détails</a>
+                                </td>
+                                <td>
+                                    <a href="/updateArticle/<%= article.articleId %>"
+                                        class="btn btn-warning">Modifier</a>
+                                </td>
+                                <td>
+                                    <form class="formDelete" action="/delete/<%= article.articleId %>?_method=DELETE"
+                                        method="POST">
+                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

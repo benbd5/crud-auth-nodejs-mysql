@@ -7,21 +7,21 @@
     </div>
 </div>
 
-<h2><%= totalArticles %> articles liés à cet auteur </h2>
+<h2 class="text-center"><%= totalArticles %> articles liés à cet auteur </h2>
 
 <div class="container">
     <div class="row">
         <% articlesUsers.forEach(articlesUsers => { %>
-        <div class="col">
-            <div class="card" style="width: 18rem;">
+        <div class="col-xl-4 col-md-6 d-flex justify-content-center">
+            <div class="card modif">
                 <img src="/uploads/<%= articlesUsers.image %> " class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= articlesUsers.titre %> </h5>
                     <p class="card-text"><%= articlesUsers.description %> </p>
                     <p class="card-text"> Publié le : <%= moment(articlesUsers.dateAjout).format('DD/MM/YYYY') %> </p>
-                    <a href="/liste-des-articles/<%= articlesUsers.articleId %> " class="btn btn-primary">Lire la
-                        suite...</a>
                 </div>
+                <a href="/liste-des-articles/<%= articlesUsers.articleId %> " class="btn btn-primary">Lire la
+                    suite...</a>
             </div>
         </div>
         <% }) %>

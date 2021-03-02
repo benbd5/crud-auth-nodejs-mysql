@@ -1,92 +1,86 @@
 <%- include('../partials/header.ejs') %>
 <%- include('../partials/navbar.ejs') %>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
+    <h1 class="text-center mb-3">Tableau de bord</h1>
+    <h2 class="text-center">Les articles</h2>
     <div class="col">
-      <h1>Tableau de bord</h1>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Photo</th>
+              <th scope="col">Titre</th>
+              <th scope="col">Description</th>
+              <th scope="col">Date de publication</th>
+              <th scope="col">Détails</th>
+              <th scope="col">Modifier</th>
+              <th scope="col">Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% articles.forEach(article => { %>
+            <tr>
+              <th scope="row"><%= article.articleId %></th>
+              <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
+              <td><%= article.titre %></td>
+              <td><%= article.description %></td>
+              <td><%= moment(article.dateAjout).format('DD/MM/YYYY') %></td>
+              <td>
+                <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Détails</a>
+              </td>
+              <td>
+                <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
+              </td>
+              <td>
+                <form class="formDelete" action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
-<div class="container">
   <div class="row">
-    <h2>Les articles</h2>
+    <h2 class="text-center">Les utilisateurs</h2>
     <div class="col">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">Photo</th>
-            <th scope="col">Titre</th>
-            <th scope="col">Date de publication</th>
-            <th scope="col">Détails</th>
-            <th scope="col">Modifier</th>
-            <th scope="col">Supprimer</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% articles.forEach(article => { %>
-          <tr>
-            <th scope="row"><%= article.articleId %></th>
-            <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
-            <td><%= article.titre %></td>
-            <td><%= moment(article.dateAjout).format('DD/MM/YYYY') %></td>
-            <td>
-              <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Détails</a>
-            </td>
-            <td>
-              <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
-            </td>
-            <td>
-              <form class="formDelete" action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
-              </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <h2>Les utilisateurs</h2>
-    <div class="col">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">Photo</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prénom</th>
-            <th scope="col">Email</th>
-            <th scope="col">Détails</th>
-            <th scope="col">Modifier</th>
-            <th scope="col">Supprimer</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% users.forEach(user => { %>
-          <tr>
-            <th scope="row"><%= user.userId %></th>
-            <td><img src="/uploads/profil/<%= user.profilPicture %>" class="img-thumbnail" alt=""></td>
-            <td><%= user.lastname %></td>
-            <td><%= user.firstname %> </td>
-            <td><%= user.email %> </td>
-            <td>
-              <a href="/listeArticlesUser/<%= user.userId %> " class="btn btn-primary">Détails</a>
-            </td>
-            <td>
-              <a href="#<%= user.userId %>" class="btn btn-warning">Modifier</a>
-            </td>
-            <td>
-              <form class="formDelete" action="/admin/deleteUser/<%= user.userId %>?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
-              </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Photo</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Email</th>
+              <!-- <th scope="col">Détails</th>
+              <th scope="col">Modifier</th> -->
+              <th scope="col">Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+              <th scope="row"><%= user.userId %></th>
+              <td><img src="/uploads/profil/<%= user.profilPicture %>" class="img-thumbnail" alt=""></td>
+              <td><%= user.lastname %></td>
+              <td><%= user.firstname %> </td>
+              <td><%= user.email %> </td>
+              <td>
+                <form class="formDelete" action="/admin/deleteUser/<%= user.userId %>?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

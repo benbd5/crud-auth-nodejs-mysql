@@ -1,0 +1,40 @@
+footer {
+    background-color: rgb(54, 54, 54);
+    color: #fff;
+    text-align: center;
+}
+
+.copyright {
+    text-align: center;
+    padding: 20px 20px 0 0;
+}
+
+.copyright a {
+    color: #fff;
+}
+
+.social i {
+    margin: 5px 5px 5px 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.social a {
+    color: #fff;
+}
+
+#fb:hover {
+    color: #3b5999;
+}
+
+/* #insta:hover {
+    color: #e4405f;
+} */
+
+#twitter:hover {
+    color: #55acee;
+}
+
+#git:hover {
+    color: #111010;
+}

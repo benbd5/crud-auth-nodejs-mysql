@@ -1,0 +1,19 @@
+/* Boutons */
+.btn-primary {
+    border: none;
+    color: black;
+    background: #f8f8f8;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    transition: 0.5s;
+}
+
+.btn-primary:hover {
+
+    background: #aec3bf;
+}
+
+/* Page post */
+.button-post button {
+    width: 100%;
+}

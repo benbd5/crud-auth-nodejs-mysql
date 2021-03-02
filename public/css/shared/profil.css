@@ -1,0 +1,52 @@
+.profil-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.photo-profil {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+
+.form-photo-profil {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Boutons choisir et ajouter */
+.profil-form-picture {
+    display: flex;
+    justify-content: center;
+}
+
+.profil-form-picture span {
+    margin-right: 10px;
+}
+
+/* Suppression photo profil */
+#delete-profil-picture {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Modif & Delete profil */
+.profil-update-delete {
+    display: flex;
+    justify-content: center;
+}
+
+.profil-update-delete a {
+    margin-right: 10px;
+}
+
+
+/* Infos profil + hitoriques des articles postés pqr l'utilisateur */
+.profil-infos,
+.history-articles-user {
+    margin-top: 30px;
+}
