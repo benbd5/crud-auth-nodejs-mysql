@@ -48,14 +48,15 @@ const post_register = async (req, res) => {
     req.flash("messageEmailUsed", "Email déjà utilisée");
     req.flash("form", form);
 
-    res.redirect(`back`);
+    // return permet de stopper la suite des if et d'effectuer directement l'action demandee apres le return
+    return res.redirect(`back`);
   }
 
   // Condition pour vérifier que les champs ne sont pas vides
   else if (!firstname || !lastname || !email || !password) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     req.flash("form", form);
-    res.redirect(`back`);
+    return res.redirect(`back`);
   }
 
   // Mots de passes non hashés lors de la comparaison --> à modifier
@@ -67,7 +68,7 @@ const post_register = async (req, res) => {
 
     req.flash("form", form);
 
-    res.redirect(`back`);
+    return res.redirect(`back`);
   } else if (password == confirmPassword) {
     // Ajout d'un utilisateur et hash du mdp
     try {
@@ -124,11 +125,11 @@ const post_login = async (req, res) => {
 
   if (!email || !password) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
-    res.redirect(`back`);
+    return res.redirect(`back`);
   }
 
   if (checkEmail[0].email != email) {
-    // console.log("email:", email, "check:", checkEmail[0].email);
+    console.log("email:", email, "check:", checkEmail[0].email);
     req.flash(
       "messageEmailIncorrect",
       `L'email est incorrect. Veuillez la saisir à nouveau ou vous inscrire en cliquant ` // (ici) --> suite sur login.ejs
