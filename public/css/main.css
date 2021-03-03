@@ -11,7 +11,7 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* html,
@@ -20,27 +20,31 @@ body {
 } */
 
 body {
-    margin: 0;
-    background: #eee;
+  margin: 0;
+  background: #eee;
 }
 
 p,
 a,
 li {
-    font-family: "Frank Ruhl Libre", serif;
-    font-size: 16px;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 16px;
 }
 
 hr {
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+h1 {
+  font-weight: bold;
 }
 
 /* Wave SVG background*/
 body {
-    background-image: url("/images/wave2.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-width: 100%;
+  background-image: url("/images/wave2.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-width: 100%;
 }
