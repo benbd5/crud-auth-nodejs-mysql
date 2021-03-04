@@ -45,7 +45,7 @@ CREATE TABLE category(
 CREATE TABLE article(
         articleId   Int  Auto_increment  NOT NULL ,
         title       Varchar (255) NOT NULL ,
-        picture     Varchar (255) NOT NULL ,
+        image     Varchar (255) NOT NULL ,
         description Text NOT NULL ,
         dateAdd     Date NOT NULL ,
         categoryId  Int NOT NULL ,

@@ -3,6 +3,8 @@ const fs = require("fs");
 
 // GET page admin
 const get_admin_page = async (req, res) => {
+  res.locals.title = "Admin";
+
   const articles = await query(
     "SELECT articleId, title, description, image, dateAdd, userId FROM article ORDER BY dateAdd DESC"
   );

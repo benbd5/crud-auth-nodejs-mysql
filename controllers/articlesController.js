@@ -6,6 +6,8 @@ const fs = require("fs");
 // -------------------------- GET Articles --------------------------
 // Liste des articles
 const get_list_article = async (req, res) => {
+  res.locals.title = "Accueil";
+
   let listArticles = await query(
     "SELECT article.title, article.description, article.image, article.dateAdd, article.articleId FROM article ORDER BY dateAdd DESC"
   );
@@ -23,9 +25,12 @@ const get_details_article = async (req, res) => {
   const id = req.params.id;
 
   const singleArticle = await query(
-    "SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM user INNER JOIN article ON user.userId = article.userId INNER JOIN category ON article.userId = category.userId WHERE articleId = ?",
+    "SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM user INNER JOIN article ON user.userId = article.userId INNER JOIN category ON article.articleId = category.categoryId WHERE articleId = ?",
     id
   );
+
+  res.locals.title = `Report ${singleArticle[0].title}`;
+
   res.render("singleArticle", {
     article: singleArticle[0],
   });
@@ -45,6 +50,8 @@ const get_articles_users = async (req, res) => {
     id
   );
 
+  res.locals.title = `Liste des articles de ${articlesUsers[0].firstname}`;
+
   res.render("listeArticlesUser", {
     articlesUsers,
     totalArticles: totalArticles[0].Total,
@@ -54,6 +61,8 @@ const get_articles_users = async (req, res) => {
 // -------------------------- POST articles --------------------------
 // Afficher la page post des articles
 const get_post_page = async (req, res) => {
+  res.locals.title = "Poster un article";
+
   const categories = await query(
     "SELECT categoryId, name FROM category ORDER BY category.name DESC"
   );
@@ -103,6 +112,9 @@ const get_update_article = async (req, res) => {
     "SELECT articleId, title, description, image, userId FROM article WHERE articleId=?",
     [id]
   );
+
+  res.locals.title = `Modifier le report ${singleArticle[0].title}`;
+
   res.render("updateArticle", {
     article: singleArticle[0],
     noImage: req.flash("noImage"),

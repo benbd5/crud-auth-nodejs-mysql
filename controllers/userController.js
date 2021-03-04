@@ -11,6 +11,8 @@ const get_page_profil = async (req, res) => {
     id
   );
 
+  res.locals.title = `Votre compte`;
+
   // Jointure pour récupérer les articles en fonction de l'utilisateur (avec son userId)
   const articles = await query(
     "SELECT title, image, description, dateAdd, articleId FROM article INNER JOIN user ON article.userId = user.userId WHERE user.userId = ? ORDER BY dateAdd DESC",
@@ -27,6 +29,8 @@ const get_page_profil = async (req, res) => {
 
 // Affiche la page de modification du profil
 const get_update_profil = async (req, res) => {
+  res.locals.title = `Modifier votre profil`;
+
   const id = res.locals.user;
 
   const userProfil = await query(

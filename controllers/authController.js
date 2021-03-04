@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 // ------------------- Register -------------------
 // Affiche la page inscription
 const get_register_page = (req, res) => {
+  res.locals.title = `S'inscrire`;
+
   // Faire passer le req.flash dans le req.locals pour récupérer les données
   res.locals.flashes = req.flash("form")[0];
 
@@ -103,6 +105,8 @@ const post_register = async (req, res) => {
 // ------------------- Login -------------------
 // Affiche la page connexion
 const get_login_page = (req, res) => {
+  res.locals.title = `Se connecter`;
+
   if (!res.locals.user) {
     res.render("login", {
       messageRegisterSuccess: req.flash("messageRegisterSuccess"),
