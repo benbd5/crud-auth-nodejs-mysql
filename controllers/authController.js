@@ -28,6 +28,7 @@ const post_register = async (req, res) => {
 
   // Rôle définit pour les utilisateurs
   const roles = "user";
+  const dateRegister = new Date().toISOString().split("T")[0];
 
   const form = {
     firstname: req.body.firstname,
@@ -77,8 +78,8 @@ const post_register = async (req, res) => {
       const hashPassword = await bcrypt.hash(password, saltRounds);
 
       await query(
-        "INSERT INTO user (firstname, lastname, email, password, roles) VALUES (?,?,?,?,?)",
-        [firstname, lastname, email, hashPassword, roles],
+        "INSERT INTO user (firstname, lastname, email, password, dateRegister, roles) VALUES (?,?,?,?,?,?)",
+        [firstname, lastname, email, hashPassword, dateRegister, roles],
         (err, result) => {
           if (err) {
             console.log("erreur :", err);

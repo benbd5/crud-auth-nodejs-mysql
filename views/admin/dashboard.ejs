@@ -25,9 +25,9 @@
             <tr>
               <th scope="row"><%= article.articleId %></th>
               <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
-              <td><%= article.titre %></td>
+              <td><%= article.title %></td>
               <td><%= article.description %></td>
-              <td><%= moment(article.dateAjout).format('DD/MM/YYYY') %></td>
+              <td><%= moment(article.dateAdd).format('DD/MM/YYYY') %></td>
               <td>
                 <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Détails</a>
               </td>

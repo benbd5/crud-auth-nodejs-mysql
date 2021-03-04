@@ -1,7 +1,7 @@
 <%- include('partials/header.ejs') %>
 <%- include('partials/navbar.ejs') %>
 
-<h1 class="text-center"><%= article.titre %> </h1>
+<h1 class="text-center"><%= article.title %> </h1>
 
 <div class="container">
     <div class="row">
@@ -11,9 +11,9 @@
             </div>
             <div class="col-lg-5" id="test">
                 <div class="test">
-                    <h5 class="card-title"><%= article.titre %> </h5>
+                    <h5 class="card-title"><%= article.title %> </h5>
                     <p class="card-text"><%= article.description %> </p>
-                    <p class="card-text"> Publié le : <%= moment(article.dateAjout).format('DD/MM/YYYY') %> </p>
+                    <p class="card-text"> Publié le : <%= moment(article.dateAdd).format('DD/MM/YYYY') %> </p>
                     <p>Publié par : <a href="/listeArticlesUser/<%= article.userId %> "><%= article.firstname %>
                         </a>
                     </p>

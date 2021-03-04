@@ -7,7 +7,7 @@ const fs = require("fs");
 // Liste des articles
 const get_list_article = async (req, res) => {
   let listArticles = await query(
-    "SELECT article.titre, article.description, article.image, article.categories, article.dateAjout, article.articleId FROM article ORDER BY dateAjout DESC"
+    "SELECT article.title, article.description, article.image, article.dateAdd, article.articleId FROM article ORDER BY dateAdd DESC"
   );
   // ORDER BY DESC pour récupérer les articles les plus récents d'abord
 
@@ -23,7 +23,7 @@ const get_details_article = async (req, res) => {
   const id = req.params.id;
 
   const singleArticle = await query(
-    "SELECT titre, image, description, categories, dateAjout, articleId, user.userId, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE articleId = ?",
+    "SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM user INNER JOIN article ON user.userId = article.userId INNER JOIN category ON article.userId = category.userId WHERE articleId = ?",
     id
   );
   res.render("singleArticle", {
@@ -41,7 +41,7 @@ const get_articles_users = async (req, res) => {
   );
 
   const articlesUsers = await query(
-    "SELECT titre, image, description, categories, articleId, dateAjout, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE user.userId = ? ORDER BY dateAjout DESC",
+    "SELECT title, image, description, articleId, dateAdd, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE user.userId = ? ORDER BY dateAdd DESC",
     id
   );
 
@@ -53,18 +53,22 @@ const get_articles_users = async (req, res) => {
 
 // -------------------------- POST articles --------------------------
 // Afficher la page post des articles
-const get_post_page = (req, res) => {
-  res.render("post", { messageFields: req.flash("messageFields") });
+const get_post_page = async (req, res) => {
+  const categories = await query(
+    "SELECT categoryId, name FROM category ORDER BY category.name DESC"
+  );
+
+  res.render("post", { messageFields: req.flash("messageFields"), categories });
 };
 
 // Poster un article
 const post_article = async (req, res) => {
-  const { titre, description, dateAjout } = req.body;
+  const { title, description, dateAdd, categoryId } = req.body;
 
   // const image = req.files.image;
   const userId = res.locals.user;
 
-  if (!titre || !description || !req.files.image) {
+  if (!title || !description || !req.files.image || !categoryId) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     res.redirect(`back`);
   } else {
@@ -84,8 +88,8 @@ const post_article = async (req, res) => {
     });
 
     await query(
-      "INSERT INTO article (titre, description, image, dateAjout, userId) VALUES (?,?,?,?,?)",
-      [titre, description, imageName, dateAjout, userId]
+      "INSERT INTO article (title, description, image, dateAdd, userId, categoryId) VALUES (?,?,?,?,?,?)",
+      [title, description, imageName, dateAdd, userId, categoryId]
     );
     res.redirect("/profil");
   }
@@ -96,7 +100,7 @@ const post_article = async (req, res) => {
 const get_update_article = async (req, res) => {
   const id = req.params.id;
   const singleArticle = await query(
-    "SELECT articleId, titre, description, image, userId FROM article WHERE articleId=?",
+    "SELECT articleId, title, description, image, userId FROM article WHERE articleId=?",
     [id]
   );
   res.render("updateArticle", {
@@ -107,7 +111,7 @@ const get_update_article = async (req, res) => {
 
 // Modifier les articles
 const update_article = async (req, res) => {
-  const { titre, description, categories } = req.body;
+  const { title, description } = req.body;
 
   const id = req.params.id;
 
@@ -131,8 +135,8 @@ const update_article = async (req, res) => {
     });
 
     await query(
-      "UPDATE article SET titre = ?, description = ?, image = ? WHERE articleId=?",
-      [titre, description, imageName, id]
+      "UPDATE article SET title = ?, description = ?, image = ? WHERE articleId=?",
+      [title, description, imageName, id]
     );
     res.redirect("/profil");
   }

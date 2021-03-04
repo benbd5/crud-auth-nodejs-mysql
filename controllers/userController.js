@@ -13,7 +13,7 @@ const get_page_profil = async (req, res) => {
 
   // Jointure pour récupérer les articles en fonction de l'utilisateur (avec son userId)
   const articles = await query(
-    "SELECT titre, image, description, categories, dateAjout, articleId FROM article INNER JOIN user ON article.userId = user.userId WHERE user.userId = ? ORDER BY dateAjout DESC",
+    "SELECT title, image, description, dateAdd, articleId FROM article INNER JOIN user ON article.userId = user.userId WHERE user.userId = ? ORDER BY dateAdd DESC",
     id
   );
 

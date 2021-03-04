@@ -18,7 +18,7 @@
         <form action="/send" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title" class="form-label">Titre</label>
-                <input type="title" class="form-control" id="title" name="titre" placeholder="Titre">
+                <input type="title" class="form-control" id="title" name="title" placeholder="Titre">
             </div>
 
             <div class="mb-3">
@@ -29,19 +29,23 @@
 
             <!-- Date de publication (remplie par défaut avec la date d'aujourd'hui avec du javascript : fichier date.js) -->
             <div class="mb-3">
-                <label for="start">Date de l'article :</label>
+                <label for="dateAdd">Date de l'article :</label>
 
-                <input type="date" id="dateAjout" name="dateAjout" value="" min="2021-01-01" max="">
+                <input type="date" id="dateAdd" name="dateAdd" value="" min="2021-01-01" max="">
             </div>
 
-            <!-- <div class="mb-3">
-            <select class="form-select" required aria-label="select" name="userId>
-                <option value="">Choisir</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-        </div> -->
+            <div class="mb-3">
+                <label for="category">Choix du département :</label>
+
+                <select name="categoryId" id="category">
+
+                    <% categories.forEach(category => { %>
+                    <option value="<%= category.categoryId %> "><%= category.name %> </option>
+                    <% }) %>
+
+                </select>
+
+            </div>
 
             <div class="mb-3">
                 <input type="file" class="form-control" aria-label="file example" name="image">
