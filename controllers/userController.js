@@ -49,13 +49,13 @@ const update_profil = async (req, res) => {
 
   // Re hasher le mdp lors de la modification
   try {
-    // Hash du mdp
+    /* // Hash du mdp
     const saltRounds = 10;
-    const hashPassword = await bcrypt.hash(password, saltRounds);
+    const hashPassword = await bcrypt.hash(password, saltRounds); */
 
     await query(
-      "UPDATE user SET lastname = ?,  firstname = ?, email = ?, password = ? WHERE userId = ?",
-      [lastname, firstname, email, hashPassword, id],
+      "UPDATE user SET lastname = ?,  firstname = ?, email = ? WHERE userId = ?",
+      [lastname, firstname, email, id],
       (err, result) => {
         if (err) {
           //   req.flash("messageError", `Il y a une erreur ${err}`);
