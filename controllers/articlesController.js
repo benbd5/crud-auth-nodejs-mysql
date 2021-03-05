@@ -13,7 +13,7 @@ const get_list_article = async (req, res) => {
   );
 
   let listArticles = await query(
-    "SELECT article.title, article.description, article.image, article.dateAdd, article.articleId FROM article ORDER BY dateAdd DESC"
+    "SELECT article.title, article.description, article.image, article.dateAdd, article.articleId, category.categoryId, category.name FROM article INNER JOIN category ON article.categoryId = category.categoryId ORDER BY dateAdd DESC"
   );
   // ORDER BY DESC pour récupérer les articles les plus récents d'abord
 
@@ -51,7 +51,7 @@ const get_articles_users = async (req, res) => {
   );
 
   const articlesUsers = await query(
-    "SELECT title, image, description, articleId, dateAdd, user.lastname, user.firstname, user.profilPicture FROM user INNER JOIN article ON user.userId = article.userId WHERE user.userId = ? ORDER BY dateAdd DESC",
+    "SELECT title, image, description, articleId, dateAdd, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM user INNER JOIN article ON user.userId = article.userId INNER JOIN category ON article.categoryId = category.categoryId WHERE user.userId = ? ORDER BY dateAdd DESC",
     id
   );
 

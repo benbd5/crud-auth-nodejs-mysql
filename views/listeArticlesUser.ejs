@@ -17,6 +17,7 @@
                 <img src="/uploads/<%= articlesUsers.image %> " class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= articlesUsers.title %> </h5>
+                    <a href="/categories/<%= articlesUsers.categoryId %> "><%= articlesUsers.name %> </a>
                     <p class="card-text"><%= articlesUsers.description %> </p>
                     <p class="card-text"> Publié le : <%= moment(articlesUsers.dateAdd).format('DD/MM/YYYY') %> </p>
                 </div>
