@@ -123,19 +123,24 @@ const post_login = async (req, res) => {
   const { email, password } = req.body;
 
   // Vérification de l'email
-  const checkEmail = await query("SELECT email FROM user WHERE email=?", email);
+  // const checkEmail = await query("SELECT email FROM user WHERE email=?", email);
+  const checkEmail = await query(
+    "SELECT COUNT(*) AS cnt FROM user WHERE email = ?",
+    email
+  );
 
   if (!email || !password) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     return res.redirect(`back`);
   }
-  // console.log(checkEmail[0].email);
-  if (checkEmail.email === undefined || checkEmail[0].email != email) {
+
+  // if (checkEmail[0].email != email) {
+  if (!checkEmail[0].cnt > 0) {
     req.flash(
       "messageEmailIncorrect",
-      `L'email ou le mot de passe sont incorrect. Veuillez les saisir à nouveau ou vous inscrire en cliquant ` // (ici) --> suite sur login.ejs
+      `L'email est incorrect. Veuillez la saisir à nouveau ou vous inscrire en cliquant ` // (ici) --> suite sur login.ejs
     );
-    res.redirect(`back`);
+    return res.redirect(`back`);
   } else {
     // L'email existe : vérification du mot de passe
     const user = await query(
@@ -154,22 +159,22 @@ const post_login = async (req, res) => {
 
     // Comparaison des mots de passe
     const match = await bcrypt.compare(password, user[0].password);
-
+    console.log(match);
     if (match) {
       // Login
-      req.session.userId = user[0].userID;
+      req.session.userId = user[0].userId;
       req.session.firstname = user[0].firstname;
       req.session.role = user[0].roles;
 
       // Récupérer les infos de l'utilisateur et les stocker dans la session
       req.session.user = {
-        id: user[0].userID,
+        id: user[0].userId,
         firstname: user[0].firstname,
         lastname: user[0].lastname,
         email: user[0].email,
         role: user[0].roles,
       };
-
+      console.log(req.session.user);
       if (req.session.role == "admin") {
         res.redirect("/admin/dashboard");
       } else {
