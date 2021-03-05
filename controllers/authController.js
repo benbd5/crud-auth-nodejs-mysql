@@ -129,20 +129,19 @@ const post_login = async (req, res) => {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     return res.redirect(`back`);
   }
-
-  if (checkEmail[0].email != email) {
-    console.log("email:", email, "check:", checkEmail[0].email);
+  // console.log(checkEmail[0].email);
+  if (checkEmail.email === undefined || checkEmail[0].email != email) {
     req.flash(
       "messageEmailIncorrect",
-      `L'email est incorrect. Veuillez la saisir à nouveau ou vous inscrire en cliquant ` // (ici) --> suite sur login.ejs
+      `L'email ou le mot de passe sont incorrect. Veuillez les saisir à nouveau ou vous inscrire en cliquant ` // (ici) --> suite sur login.ejs
     );
-    return res.redirect("/auth/login");
+    res.redirect(`back`);
   } else {
     // L'email existe : vérification du mot de passe
     const user = await query(
       "SELECT ??, ??, ??, ??, ??, ?? FROM user WHERE ?? = ?",
       [
-        `userID`,
+        `userId`,
         `firstname`,
         `lastname`,
         `email`,
@@ -170,7 +169,6 @@ const post_login = async (req, res) => {
         email: user[0].email,
         role: user[0].roles,
       };
-      // console.log("session :", req.session.user);
 
       if (req.session.role == "admin") {
         res.redirect("/admin/dashboard");
@@ -182,7 +180,7 @@ const post_login = async (req, res) => {
         "messageMdpIncorrect",
         `Le mot de passe est incorrect. Veuillez le saisir à nouveau.`
       );
-      res.redirect("login");
+      res.redirect(`back`);
     }
   }
 };
