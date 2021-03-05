@@ -17,7 +17,6 @@ const verify_role = (req, res, next) => {
       "messageNotAdmin",
       "Vous n'avez pas les droits pour accéder à cette page"
     );
-    // console.log("user");
     return res.redirect("/");
   } else {
     next();

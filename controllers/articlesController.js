@@ -8,6 +8,10 @@ const fs = require("fs");
 const get_list_article = async (req, res) => {
   res.locals.title = "Accueil";
 
+  const categories = await query(
+    "SELECT categoryId, name, userId FROM category"
+  );
+
   let listArticles = await query(
     "SELECT article.title, article.description, article.image, article.dateAdd, article.articleId FROM article ORDER BY dateAdd DESC"
   );
@@ -17,6 +21,7 @@ const get_list_article = async (req, res) => {
     listArticles,
     messageNotAdmin: req.flash("messageNotAdmin"),
     alreadyConnected: req.flash("alreadyConnected"),
+    categories,
   });
 };
 
@@ -74,7 +79,6 @@ const get_post_page = async (req, res) => {
 const post_article = async (req, res) => {
   const { title, description, dateAdd, categoryId } = req.body;
 
-  // const image = req.files.image;
   const userId = res.locals.user;
 
   if (!title || !description || !req.files.image || !categoryId) {
@@ -97,8 +101,21 @@ const post_article = async (req, res) => {
     });
 
     await query(
-      "INSERT INTO article (title, description, image, dateAdd, userId, categoryId) VALUES (?,?,?,?,?,?)",
-      [title, description, imageName, dateAdd, userId, categoryId]
+      "INSERT INTO article (??, ??, ??, ??, ??, ??) VALUES (?,?,?,?,?,?)",
+      [
+        "title",
+        "description",
+        "image",
+        "dateAdd",
+        "userId",
+        "categoryId",
+        title,
+        description,
+        imageName,
+        dateAdd,
+        userId,
+        categoryId,
+      ]
     );
     res.redirect("/profil");
   }

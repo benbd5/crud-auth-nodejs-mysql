@@ -21,6 +21,11 @@
 
   <div class="row">
 
+
+    <% categories.forEach(category => { %>
+    <a href="/categories/<%= category.categoryId %> "><%= category.name %> </a>
+    <% }) %>
+
     <h2 class="text-center mb-5">Les articles les plus récents</h2>
 
     <% listArticles.forEach(article => { %>

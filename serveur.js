@@ -8,7 +8,6 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   fileupload = require("express-fileupload"),
   methodOverride = require("method-override"),
-  moment = require("moment"),
   mysql = require("mysql");
 
 // Dotenv
@@ -40,25 +39,25 @@ connection.connect((err) => {
     console.error("error connecting: " + err.stack);
     return;
   }
-  console.log("connected as id " + connection.threadId);
+  console.log("Connecté à MySQL");
 });
 
 // Variable globale pour mysql : util.promisify de node.js lié avec .bind()
 global.query = util.promisify(connection.query).bind(connection);
 
-// Express session MySQL pour récupérer les cookies dans la db
+// Express session MySQL pour récupérer les cookies dans la la base de données
 const sessionStore = new MySQLStore({}, connection);
 
 // Express Session
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: process.env.SECRET, // signe le cookie pour identifier une session
     resave: false, // force à ce qu'une nouvelle session soit crée
     saveUninitialized: true, // force à ce qu'une nouvelle session soit enregistrée
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, // le cookie dure 24h
     },
-    store: sessionStore, // SessionsStore pour récupérer les cookies dans la db
+    store: sessionStore, // SessionsStore pour récupérer les cookies dans la base de données
   })
 );
 
@@ -77,7 +76,6 @@ app.use("*", (req, res, next) => {
   res.locals.name = req.session.firstname;
   res.locals.role = req.session.role;
 
-  // console.log(` id : ${res.locals.user}, name : ${res.locals.name}`);
   next();
 });
 
@@ -86,11 +84,13 @@ const admin = require("./routes/adminRoutes");
 const articles = require("./routes/articlesRoute");
 const auth = require("./routes/authRoute");
 const user = require("./routes/userRoute");
+const category = require("./routes/categoryRoute");
 
 app.use("/admin", admin);
 app.use("/auth", auth);
 app.use(user);
 app.use(articles);
+app.use(category);
 
 app.get("*", function (req, res) {
   res.render("404");

@@ -40,18 +40,15 @@ const post_register = async (req, res) => {
 
   // Vérifie si l'email existe
   const findEmail = await query(
-    "SELECT COUNT(email) AS cnt FROM user WHERE email = ?",
-    // ou
-    // SELECT email FROM user WHERE email=?
-    // et if (checkEmail[0].email != email)
-    email
+    "SELECT COUNT(email) AS cnt FROM user WHERE ?? = ?",
+    [`email`, email]
   );
 
   if (findEmail[0].cnt > 0) {
     req.flash("messageEmailUsed", "Email déjà utilisée");
     req.flash("form", form);
 
-    // return permet de stopper la suite des if et d'effectuer directement l'action demandee apres le return
+    // return permet de stopper le code en cours et d'effectuer directement l'action demandée apres le return
     return res.redirect(`back`);
   }
 
@@ -143,8 +140,17 @@ const post_login = async (req, res) => {
   } else {
     // L'email existe : vérification du mot de passe
     const user = await query(
-      "SELECT userID, firstname, lastname, email, password, roles FROM user WHERE email = ?",
-      email
+      "SELECT ??, ??, ??, ??, ??, ?? FROM user WHERE ?? = ?",
+      [
+        `userID`,
+        `firstname`,
+        `lastname`,
+        `email`,
+        `password`,
+        `roles`,
+        `email`,
+        email,
+      ]
     );
 
     // Comparaison des mots de passe
