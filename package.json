@@ -21,6 +21,8 @@
     "joi": "^17.4.0",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "swagger-jsdoc": "^6.0.2",
+    "swagger-ui-express": "^4.1.6"
   }
 }

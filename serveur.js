@@ -10,6 +10,24 @@ const express = require("express"),
   methodOverride = require("method-override"),
   mysql = require("mysql");
 
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+// Swagger documentation
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "Documentation projet examen",
+      version: "1.0.0",
+    },
+  },
+  apis: ["./routes/*.js"],
+};
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 // Dotenv
 require("dotenv").config();
 

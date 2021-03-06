@@ -30,7 +30,7 @@ const get_details_article = async (req, res) => {
   const id = req.params.id;
 
   const singleArticle = await query(
-    "SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM user INNER JOIN article ON user.userId = article.userId INNER JOIN category ON article.articleId = category.categoryId WHERE articleId = ?",
+    "SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM user INNER JOIN article ON user.userId = article.userId INNER JOIN category ON article.categoryId = category.categoryId WHERE articleId = ?",
     id
   );
 
