@@ -27,6 +27,30 @@ const get_register_page = (req, res) => {
 // S'inscrire
 const post_register = async (req, res) => {
   const { firstname, lastname, email, password, confirmPassword } = req.body;
+  /*   const joi = require("joi");
+
+  try {
+    const schema = joi.object().keys({
+      fname: joi.string().min(3).max(45).required(),
+      lname: joi.string().min(3).max(45).required(),
+      email: joi.string().email().required(),
+      password: joi.string().min(6).max(20).required(),
+    });
+
+    const dataToValidate = {
+      fname: firstname,
+      lname: lastname,
+      email: email,
+      password: password,
+    };
+    const result = schema.validate(dataToValidate);
+    if (result.error) {
+      console.log(result.error.details[0].message);
+      return res.redirect(`back`);
+    }
+  } catch (e) {
+    console.log(e);
+  } */
 
   // Rôle définit pour les utilisateurs
   const roles = "user";
@@ -123,7 +147,6 @@ const post_login = async (req, res) => {
   const { email, password } = req.body;
 
   // Vérification de l'email
-  // const checkEmail = await query("SELECT email FROM user WHERE email=?", email);
   const checkEmail = await query(
     "SELECT COUNT(*) AS cnt FROM user WHERE email = ?",
     email
@@ -134,7 +157,6 @@ const post_login = async (req, res) => {
     return res.redirect(`back`);
   }
 
-  // if (checkEmail[0].email != email) {
   if (!checkEmail[0].cnt > 0) {
     req.flash(
       "messageEmailIncorrect",
@@ -159,7 +181,6 @@ const post_login = async (req, res) => {
 
     // Comparaison des mots de passe
     const match = await bcrypt.compare(password, user[0].password);
-    console.log(match);
     if (match) {
       // Login
       req.session.userId = user[0].userId;
@@ -174,7 +195,6 @@ const post_login = async (req, res) => {
         email: user[0].email,
         role: user[0].roles,
       };
-      console.log(req.session.user);
       if (req.session.role == "admin") {
         res.redirect("/admin/dashboard");
       } else {
