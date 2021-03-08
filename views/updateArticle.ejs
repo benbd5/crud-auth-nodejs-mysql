@@ -12,8 +12,8 @@
 <div class="container">
     <form action="/update-article/<%= article.articleId %>?_method=PUT " method="post" enctype="multipart/form-data">
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Titre</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Titre" name="title"
+            <label for="exampleFormControlInput1" class="form-label">Spot</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Spot" name="title"
                 value="<%= article.title %> ">
         </div>
         <div class="mb-3">
@@ -24,7 +24,7 @@
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">Image</label>
-            <input class="form-control" type="file" id="formFile" name="image" value="<%= article.image %> ">
+            <input class="form-control" type="file" id="formFile" name="image" value="/uploads/<%= article.image %> ">
             <p>Image actuelle :</p>
             <img src="/uploads/<%= article.image %> " class="img-thumbnail" alt="">
         </div>

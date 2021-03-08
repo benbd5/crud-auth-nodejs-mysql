@@ -1,11 +1,11 @@
 .card img {
-  width: 350px;
+  width: 400px;
   height: 350px;
   /* border-bottom: 0.05px solid #aec3bf; */
 }
 
 .card {
-  width: 350px;
+  width: 400px;
   border: none;
   box-shadow: 9px 9px 18px -5px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 9px 9px 18px -5px rgba(0, 0, 0, 0.5);
@@ -13,7 +13,11 @@
 }
 
 .card-body {
-  width: 350px;
+  max-width: 400px;
+  max-height: 300px;
+  width: 400px;
+  text-overflow: ellipsis;
+  overflow: hidden;
   /* background: #aec3bf; */
 }
 

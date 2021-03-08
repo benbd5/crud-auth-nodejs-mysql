@@ -14,7 +14,6 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
 // Swagger documentation
-
 const swaggerOptions = {
   swaggerDefinition: {
     info: {

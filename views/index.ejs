@@ -19,12 +19,28 @@
   </div>
   <% } %>
 
+
+  <!-- Départements -->
+  <nav class="navbar navbar-expand-lg navbar-light text-center">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Les départements</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#category"
+        aria-controls="category" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="category">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
+          <% categories.forEach(category => { %>
+          <li class="nav-item">
+            <a class="nav-link category-nav" href="/categories/<%= category.categoryId %> "><%= category.name %> </a>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   <div class="row">
-
-
-    <% categories.forEach(category => { %>
-    <a href="/categories/<%= category.categoryId %> "><%= category.name %> </a>
-    <% }) %>
 
     <h2 class="text-center mb-5">Les articles les plus récents</h2>
 
@@ -37,10 +53,10 @@
         </a>
         <div class="card-body">
           <h2 class="card-title"><%= article.title %> </h2>
-          <p class="card-text"><%= article.description %> </p>
           <a href="/categories/<%= article.categoryId %> "><%= article.name %> </a>
           <p class="dateAjout">Publié le : <%= moment(article.dateAdd).format('DD/MM/YYYY') %> </p>
           <p><%= article.userId %> </p>
+          <p class="card-text"><%= article.description %> </p>
         </div>
         <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-card">Lire la
           suite...</a>
