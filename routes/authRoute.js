@@ -1,5 +1,14 @@
 const router = require("express").Router();
 const authController = require("../controllers/authController");
+const rateLimit = require("express-rate-limit");
+
+// Bloque l'ip de l'utilisateur pendant 5mn au bout de 5 essais de connexion ratés
+const passwordLoginLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 5, // limit each IP to 5 requests
+  message:
+    "Vous avez saisi un mauvais mot de passe 5 fois. Veuillez patienter 5 minutes avant une nouvelle tentative de connexion",
+});
 
 // Page register
 /**
@@ -51,7 +60,7 @@ router.get("/login", authController.get_login_page);
  *          200:
  *              description: Connexion réussie !
  */
-router.post("/login", authController.post_login);
+router.post("/login", passwordLoginLimiter, authController.post_login);
 
 // Logout
 /**
