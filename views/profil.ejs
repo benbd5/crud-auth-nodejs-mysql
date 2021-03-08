@@ -77,7 +77,6 @@
                             <tr>
                                 <th scope="col">Photo</th>
                                 <th scope="col">Spot</th>
-                                <th scope="col">Description</th>
                                 <th scope="col">Département</th>
                                 <th scope="col">Date de publication</th>
                                 <th scope="col">Détails</th>
@@ -97,7 +96,6 @@
                             <tr>
                                 <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
                                 <td><%= article.title %></td>
-                                <td class="long-text"><%= article.description%></td>
                                 <td><%= article.name %></td>
                                 <td><%= moment(article.dateAdd).format('DD/MM/YYYY') %></td>
                                 <td>

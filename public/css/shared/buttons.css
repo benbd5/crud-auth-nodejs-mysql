@@ -1,18 +1,19 @@
 /* Boutons */
 .btn-card {
-    color: black;
-    background: #ffffff;
-    border-top: 0.05px solid #aec3bf;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    transition: 0.5s;
+  color: black;
+  background: #ffffff;
+  border-top: 0.05px solid #aec3bf;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  transition: 0.5s;
 }
 
 .btn-card:hover {
-    background: #aec3bf;
+  background: #284243;
+  color: #ffffff;
 }
 
 /* Page post */
 .button-post button {
-    width: 100%;
+  width: 100%;
 }

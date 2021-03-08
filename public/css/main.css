@@ -48,15 +48,3 @@ body {
   background-size: cover;
   min-width: 100%;
 }
-
-/* Permet de ne voir qu'un court extrait de la description */
-table {
-  table-layout: fixed;
-  width: 100%;
-}
-
-table td {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
