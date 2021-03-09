@@ -99,7 +99,8 @@ const post_article = async (req, res) => {
     const image = req.files.image;
     const imageName = image.name.split(".")[0]; // pour récupérer le nom de l'image dans le dossier uploads en ayant enlevé le mimetype d'origine
 
-    const imageNameWebp = imageName + title + ".webp";
+    const imageNameWebp =
+      imageName + title.replace(/ |É|À|È|Ê|'/g, "-") + ".webp";
     const imagePath = path.resolve(
       __dirname,
       "..",
