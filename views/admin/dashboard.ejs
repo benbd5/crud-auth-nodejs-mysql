@@ -25,7 +25,7 @@
             <% articles.forEach(article => { %>
             <tr>
               <th scope="row"><%= article.articleId %></th>
-              <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
+              <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt="" loading="lazy"></td>
               <td><%= article.title %></td>
               <td><%= article.firstname %></td>
               <td><%= article.name %></td>
@@ -68,7 +68,7 @@
             <% users.forEach(user => { %>
             <tr>
               <th scope="row"><%= user.userId %></th>
-              <td><img src="/uploads/profil/<%= user.profilPicture %>" class="img-thumbnail" alt=""></td>
+              <td><img src="/uploads/profil/<%= user.profilPicture %>" class="img-thumbnail" alt="" loading="lazy"></td>
               <td><%= user.lastname %></td>
               <td><%= user.firstname %> </td>
               <td><%= moment(user.dateRegister).format('DD/MM/YYYY') %> </td>

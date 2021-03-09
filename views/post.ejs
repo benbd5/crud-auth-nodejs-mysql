@@ -1,16 +1,16 @@
 <%- include('partials/header.ejs') %>
 <%- include('partials/navbar.ejs') %>
 
-<!-- Erreur : les champs ne sont pas tous remplis -->
-<% if (messageFields.length > 0) { %>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <%= messageFields %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-<% } %>
 
 <div class="container">
     <div class="row">
+        <!-- Erreur : les champs ne sont pas tous remplis ou format d'image incorrecte -->
+        <% if (messageFields.length > 0) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= messageFields %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
 
 
         <h2 class="text-center mb-3">Publier un article</h2>

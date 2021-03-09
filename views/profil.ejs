@@ -94,7 +94,10 @@
                             <% } %>
                             <% articles.forEach(article => { %>
                             <tr>
-                                <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""></td>
+                                <td>
+                                    <img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""
+                                        loading="lazy">
+                                </td>
                                 <td><%= article.title %></td>
                                 <td><%= article.name %></td>
                                 <td><%= moment(article.dateAdd).format('DD/MM/YYYY') %></td>
