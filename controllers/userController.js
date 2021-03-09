@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const fileupload = require("express-fileupload");
 const path = require("path");
 const fs = require("fs");
+const sharp = require("sharp");
 
 // Affiche la page profil
 const get_page_profil = async (req, res) => {
@@ -81,40 +82,91 @@ const post_picture_profil = async (req, res) => {
 
   if (!req.files) {
     req.flash("noImage", "Veuillez sélectionner une image");
-    res.redirect(`back`);
-  } else {
-    try {
-      const image = req.files.image;
-      const imageName = image.name; // pour récupérer le nom de l'image dans le dossier uploads
-      // TODO : vérifier si path.resolve est utile
-      const fileUpload = path.resolve(
-        __dirname,
-        "..",
-        "public/uploads/profil/",
-        imageName
-      );
+    return res.redirect(`back`);
+  }
+  if (
+    req.files.image.mimetype === "image/png" ||
+    req.files.image.mimetype === "image/jpg" ||
+    req.files.image.mimetype === "image/jpeg" ||
+    req.files.image.mimetype === "image/webp"
+  ) {
+    const image = req.files.image;
+    const imageName = image.name.split(".")[0]; // pour récupérer le nom de l'image dans le dossier uploads en ayant enlevé le mimetype d'origine
 
-      // Use the mv() method to place the file somewhere on your server
-      image.mv(fileUpload, function (err) {
-        if (err) return res.status(500).send(err);
-      });
+    const imageNameWebp = imageName + Date.now() + ".webp"; // regex avec replace pour remplacer les espaces du titre par un tiret
+
+    const imagePath = path.resolve(
+      __dirname,
+      "..",
+      "public/uploads/profil/" + imageNameWebp
+    );
+
+    // Supprimer les images du dossier pour éviter de stocker des documents inutiles
+    const imageNamePath = await query(
+      "SELECT profilPicture FROM user WHERE userId = ?",
+      id
+    );
+
+    if (imageNamePath[0].profilPicture.length > 1) {
+      try {
+        const imageName = imageNamePath[0].profilPicture;
+        const pathFile = path.resolve(
+          __dirname,
+          "../public/uploads/profil/",
+          imageName
+        );
+
+        fs.unlink(pathFile, (err) => {
+          if (err) console.log(err);
+          console.log(pathFile, "pathFile was deleted");
+        });
+
+        // Fin de la requête de supression des images dans le dossier
+        // res.redirect(`back`);
+      } catch (error) {
+        return res.redirect(`back`);
+      }
+    } else {
+      res.redirect(`back`);
+      console.log("Erreur lors de la suppression de votre photo de profil");
+    }
+
+    try {
+      sharp(req.files.image.data)
+        .resize(800)
+        .webp({ lossless: true })
+        .toFile(imagePath);
 
       // UPDATE et non INSERT INTO car on modifie la row/ligne de la table dans mysql en ajoutant une photo
       await query("UPDATE user SET profilPicture = ? WHERE userId = ?", [
-        imageName,
+        imageNameWebp,
         id,
       ]);
+
+      // Assigner la nouvelle photo de profil dans la navbar
+      req.session.profilPicture = imageNameWebp;
 
       res.redirect(`back`);
     } catch (err) {
       console.log("err2", err);
     }
+  } else {
+    req.flash(
+      "noImage",
+      "Veuillez choisir un format d'image tel que : jpg, jpeg, webp ou png."
+    );
+    return res.redirect(`back`);
   }
 };
 
 // Suppression par l'utilisateur de sa photo de profil
 const delete_picture_profil = async (req, res) => {
   const id = res.locals.user;
+
+  // Photo de profil par défaut
+  const profilPictureDefault =
+    "wave'sreport-logo-nuances-gris-sans-ecriture22.png";
+
   // Supprimer les images du dossier pour éviter de stocker des documents inutiles
   const imageNamePath = await query(
     "SELECT profilPicture FROM user WHERE userId = ?",
@@ -134,10 +186,12 @@ const delete_picture_profil = async (req, res) => {
         if (err) console.log(err);
         console.log(pathFile, "pathFile was deleted");
       });
+      req.session.profilPicture = profilPictureDefault;
+
       // Fin de la requête de supression des images dans le dossier
       res.redirect(`back`);
     } catch (error) {
-      console.log(error);
+      return res.redirect(`back`);
     }
   } else {
     res.redirect(`back`);
