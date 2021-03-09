@@ -166,7 +166,7 @@ const post_login = async (req, res) => {
   } else {
     // L'email existe : vérification du mot de passe
     const user = await query(
-      "SELECT ??, ??, ??, ??, ??, ?? FROM user WHERE ?? = ?",
+      "SELECT ??, ??, ??, ??, ??, ??, ?? FROM user WHERE ?? = ?",
       [
         `userId`,
         `firstname`,
@@ -174,6 +174,7 @@ const post_login = async (req, res) => {
         `email`,
         `password`,
         `roles`,
+        `profilPicture`,
         `email`,
         email,
       ]
@@ -186,6 +187,7 @@ const post_login = async (req, res) => {
       req.session.userId = user[0].userId;
       req.session.firstname = user[0].firstname;
       req.session.role = user[0].roles;
+      req.session.profilPicture = user[0].profilPicture;
 
       // Récupérer les infos de l'utilisateur et les stocker dans la session
       req.session.user = {
@@ -195,6 +197,7 @@ const post_login = async (req, res) => {
         email: user[0].email,
         role: user[0].roles,
       };
+
       if (req.session.role == "admin") {
         res.redirect("/admin/dashboard");
       } else {

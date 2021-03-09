@@ -91,6 +91,7 @@ app.locals.moment = require("moment");
 app.use("*", (req, res, next) => {
   res.locals.user = req.session.userId;
   res.locals.name = req.session.firstname;
+  res.locals.profilPicture = req.session.profilPicture;
   res.locals.role = req.session.role;
 
   next();

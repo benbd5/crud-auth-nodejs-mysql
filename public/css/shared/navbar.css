@@ -4,5 +4,10 @@ nav {
 
 .nav-link:hover {
   font-size: 17px;
-  /* color: #284243; */
+}
+
+#profilPictureNavbar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
