@@ -100,7 +100,8 @@ const post_article = async (req, res) => {
     const imageName = image.name.split(".")[0]; // pour récupérer le nom de l'image dans le dossier uploads en ayant enlevé le mimetype d'origine
 
     const imageNameWebp =
-      imageName + title.replace(/ |É|À|È|Ê|'/g, "-") + ".webp";
+      imageName + title.replace(/ |É|À|È|Ê|'/g, "-") + ".webp"; // regex avec replace pour remplacer les espaces du titre par un tiret
+
     const imagePath = path.resolve(
       __dirname,
       "..",
