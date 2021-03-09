@@ -22,9 +22,11 @@
     <div class="row" id="profil-user">
 
         <div class="profil-details">
-
-            <img src="/uploads/profil/<%= userProfil.profilPicture %> " class="photo-profil">
-
+            <% if (!profilPicture) { %>
+            <img src="/images/wave'sreport-logo-nuances-gris-sans-ecriture22.png" alt="" class="photo-profil">
+            <% } else { %>
+            <img src="/uploads/profil/<%= profilPicture %> " class="photo-profil">
+            <% } %>
             <div class="form-photo-profil">
                 <!-- Ajouter une photo de profil -->
                 <form action="/addProfilPicture/<%= userProfil.userId %>?_method=PUT" method="post"
@@ -36,12 +38,16 @@
                     <button class="btn btn-primary" type="submit">Ajouter</button>
                 </form>
 
+                <% if (!profilPicture) { %>
+                <div></div>
+                <% } else { %>
                 <!-- Supprimer une photo de profil -->
                 <form id="delete-profil-picture" class="formDelete text-center"
                     action="/deleteProfilPicture/<%= userProfil.userId %>?_method=DELETE" method="post"
                     enctype="multipart/form-data">
                     <button type="submit" class="btn btn-danger">Supprimer votre photo de profil</button>
                 </form>
+                <% } %>
             </div>
 
             <hr>

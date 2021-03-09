@@ -107,6 +107,30 @@ const post_picture_profil = async (req, res) => {
       id
     );
 
+    // Pas de photo de profil donc ajout direct
+    if (!imageNamePath[0].profilPicture) {
+      try {
+        sharp(req.files.image.data)
+          .resize(800)
+          .webp({ lossless: true })
+          .toFile(imagePath);
+
+        // UPDATE et non INSERT INTO car on modifie la row/ligne de la table dans mysql en ajoutant une photo
+        await query("UPDATE user SET profilPicture = ? WHERE userId = ?", [
+          imageNameWebp,
+          id,
+        ]);
+
+        // Assigner la nouvelle photo de profil dans la navbar
+        req.session.profilPicture = imageNameWebp;
+
+        return res.redirect(`back`);
+      } catch (err) {
+        console.log("err2", err);
+      }
+    }
+
+    // Suppression photo precedente puis ajout de la nouvelle
     if (imageNamePath[0].profilPicture.length > 1) {
       try {
         const imageName = imageNamePath[0].profilPicture;
@@ -120,35 +144,31 @@ const post_picture_profil = async (req, res) => {
           if (err) console.log(err);
           console.log(pathFile, "pathFile was deleted");
         });
+        try {
+          sharp(req.files.image.data)
+            .resize(800)
+            .webp({ lossless: true })
+            .toFile(imagePath);
 
-        // Fin de la requête de supression des images dans le dossier
-        // res.redirect(`back`);
+          // UPDATE et non INSERT INTO car on modifie la row/ligne de la table dans mysql en ajoutant une photo
+          await query("UPDATE user SET profilPicture = ? WHERE userId = ?", [
+            imageNameWebp,
+            id,
+          ]);
+
+          // Assigner la nouvelle photo de profil dans la navbar
+          req.session.profilPicture = imageNameWebp;
+
+          return res.redirect(`back`);
+        } catch (err) {
+          console.log("err2", err);
+        }
       } catch (error) {
         return res.redirect(`back`);
       }
     } else {
       res.redirect(`back`);
       console.log("Erreur lors de la suppression de votre photo de profil");
-    }
-
-    try {
-      sharp(req.files.image.data)
-        .resize(800)
-        .webp({ lossless: true })
-        .toFile(imagePath);
-
-      // UPDATE et non INSERT INTO car on modifie la row/ligne de la table dans mysql en ajoutant une photo
-      await query("UPDATE user SET profilPicture = ? WHERE userId = ?", [
-        imageNameWebp,
-        id,
-      ]);
-
-      // Assigner la nouvelle photo de profil dans la navbar
-      req.session.profilPicture = imageNameWebp;
-
-      res.redirect(`back`);
-    } catch (err) {
-      console.log("err2", err);
     }
   } else {
     req.flash(
@@ -162,10 +182,6 @@ const post_picture_profil = async (req, res) => {
 // Suppression par l'utilisateur de sa photo de profil
 const delete_picture_profil = async (req, res) => {
   const id = res.locals.user;
-
-  // Photo de profil par défaut
-  const profilPictureDefault =
-    "wave'sreport-logo-nuances-gris-sans-ecriture22.png";
 
   // Supprimer les images du dossier pour éviter de stocker des documents inutiles
   const imageNamePath = await query(
@@ -186,9 +202,10 @@ const delete_picture_profil = async (req, res) => {
         if (err) console.log(err);
         console.log(pathFile, "pathFile was deleted");
       });
-      req.session.profilPicture = profilPictureDefault;
 
-      // Fin de la requête de supression des images dans le dossier
+      // Suppression de la photo de profil = assignation de la photo par defaut
+      req.session.profilPicture = "";
+
       res.redirect(`back`);
     } catch (error) {
       return res.redirect(`back`);

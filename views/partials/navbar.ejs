@@ -1,8 +1,11 @@
 <header>
 
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #202121;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Wave'sReport</a>
+  <nav class="navbar navbar-expand-lg navbar-dark d-flex"
+    style="background-color: #202121; justify-content: space-between;">
+    <div class="container-fluid" style="justify-content: space-between;">
+      <a class="navbar-brand" href="/">
+        <img src="/images/Logo-wavesreport.png" alt="Logo" id="logo">
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -29,13 +32,17 @@
           <% } %>
           <% if (user) { %>
           <li class="nav-item">
-            <a class="nav-link" href="/profil">Mon compte</a>
+            <a class="nav-link" href="/profil">
+              <% if (!profilPicture) { %>
+              <img src="/images/wave'sreport-logo-nuances-gris-sans-ecriture22.png" alt="" id="noProfilPictureNavbar">
+              <% } else { %>
+              <img src="/uploads/profil/<%= profilPicture %> " alt="" id="profilPictureNavbar">
+              <% } %>
+              <%= name %>
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/auth/logout">Déconnexion</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Salut <%= name %> </a>
           </li>
           <% } %>
         </ul>
