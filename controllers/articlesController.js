@@ -72,7 +72,10 @@ const get_post_page = async (req, res) => {
     "SELECT categoryId, name FROM category ORDER BY category.name DESC"
   );
 
-  res.render("post", { messageFields: req.flash("messageFields"), categories });
+  res.render("post", {
+    messageFields: req.flash("messageFields"),
+    categories,
+  });
 };
 
 // Poster un article
@@ -83,7 +86,20 @@ const post_article = async (req, res) => {
 
   if (!title || !description || !req.files.image || !categoryId) {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
-    res.redirect(`back`);
+    return res.redirect(`back`);
+  }
+
+  if (
+    req.files.image.mimetype != "image/png" ||
+    req.files.image.mimetype != "image/jpg" ||
+    req.files.image.mimetype != "image/jpeg" ||
+    req.files.image.mimetype != "image/webp"
+  ) {
+    req.flash(
+      "messageFields",
+      "Veuillez choisir un format d'image tel que : jpg, jpeg, webp ou png."
+    );
+    return res.redirect(`back`);
   } else {
     const image = req.files.image;
     const imageName = image.name; // pour récupérer le nom de l'image dans le dossier uploads
@@ -94,7 +110,7 @@ const post_article = async (req, res) => {
       "public/uploads/",
       imageName
     );
-
+    console.log(image);
     // Use the mv() method to place the file somewhere on your server
     image.mv(fileUpload, function (err) {
       if (err) return res.status(500).send(err);
