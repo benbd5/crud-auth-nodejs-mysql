@@ -95,8 +95,10 @@
                             <% articles.forEach(article => { %>
                             <tr>
                                 <td>
-                                    <img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""
-                                        loading="lazy">
+                                    <a href="/liste-des-articles/<%= article.articleId %> ">
+                                        <img src="/uploads/<%= article.image %>" class="img-thumbnail" alt=""
+                                            loading="lazy">
+                                    </a>
                                 </td>
                                 <td><%= article.title %></td>
                                 <td><%= article.name %></td>

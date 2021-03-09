@@ -14,7 +14,9 @@
         <% articlesUsers.forEach(articlesUsers => { %>
         <div class="col-xl-4 col-md-6 d-flex justify-content-center">
             <div class="card modif">
-                <img src="/uploads/<%= articlesUsers.image %> " class="card-img-top" alt="..." loading="lazy">
+                <a href="/liste-des-articles/<%= articlesUsers.articleId %> ">
+                    <img src="/uploads/<%= articlesUsers.image %> " class="card-img-top" alt="..." loading="lazy">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title"><%= articlesUsers.title %> </h5>
                     <a href="/categories/<%= articlesUsers.categoryId %> "><%= articlesUsers.name %> </a>

@@ -25,7 +25,11 @@
             <% articles.forEach(article => { %>
             <tr>
               <th scope="row"><%= article.articleId %></th>
-              <td><img src="/uploads/<%= article.image %>" class="img-thumbnail" alt="" loading="lazy"></td>
+              <td>
+                <a href="/liste-des-articles/<%= article.articleId %> ">
+                  <img src="/uploads/<%= article.image %>" class="img-thumbnail" alt="" loading="lazy">
+                </a>
+              </td>
               <td><%= article.title %></td>
               <td><%= article.firstname %></td>
               <td><%= article.name %></td>
