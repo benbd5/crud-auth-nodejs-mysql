@@ -2,6 +2,7 @@
 const fileupload = require("express-fileupload");
 const path = require("path");
 const fs = require("fs");
+const sharp = require("sharp");
 
 // -------------------------- GET Articles --------------------------
 // Liste des articles
@@ -90,50 +91,56 @@ const post_article = async (req, res) => {
   }
 
   if (
-    req.files.image.mimetype != "image/png" ||
-    req.files.image.mimetype != "image/jpg" ||
-    req.files.image.mimetype != "image/jpeg" ||
-    req.files.image.mimetype != "image/webp"
+    req.files.image.mimetype === "image/png" ||
+    req.files.image.mimetype === "image/jpg" ||
+    req.files.image.mimetype === "image/jpeg" ||
+    req.files.image.mimetype === "image/webp"
   ) {
+    const image = req.files.image;
+    const imageName = image.name.split(".")[0]; // pour récupérer le nom de l'image dans le dossier uploads en ayant enlevé le mimetype d'origine
+
+    const imageNameWebp = imageName + title + ".webp";
+    const imagePath = path.resolve(
+      __dirname,
+      "..",
+      "public/uploads/" + imageNameWebp
+    );
+
+    try {
+      sharp(req.files.image.data)
+        .resize(800)
+        .webp({ lossless: true })
+        .toFile(imagePath);
+
+      await query(
+        "INSERT INTO article (??, ??, ??, ??, ??, ??) VALUES (?,?,?,?,?,?)",
+        [
+          "title",
+          "description",
+          "image",
+          "dateAdd",
+          "userId",
+          "categoryId",
+          title,
+          description,
+          imageNameWebp,
+          dateAdd,
+          userId,
+          categoryId,
+        ]
+      );
+
+      res.redirect("/profil");
+    } catch (error) {
+      req.flash("messageFields", "Veuillez réessayer ultérieurement.");
+      return res.redirect(`back`);
+    }
+  } else {
     req.flash(
       "messageFields",
       "Veuillez choisir un format d'image tel que : jpg, jpeg, webp ou png."
     );
     return res.redirect(`back`);
-  } else {
-    const image = req.files.image;
-    const imageName = image.name; // pour récupérer le nom de l'image dans le dossier uploads
-
-    const fileUpload = path.resolve(
-      __dirname,
-      "..",
-      "public/uploads/",
-      imageName
-    );
-    console.log(image);
-    // Use the mv() method to place the file somewhere on your server
-    image.mv(fileUpload, function (err) {
-      if (err) return res.status(500).send(err);
-    });
-
-    await query(
-      "INSERT INTO article (??, ??, ??, ??, ??, ??) VALUES (?,?,?,?,?,?)",
-      [
-        "title",
-        "description",
-        "image",
-        "dateAdd",
-        "userId",
-        "categoryId",
-        title,
-        description,
-        imageName,
-        dateAdd,
-        userId,
-        categoryId,
-      ]
-    );
-    res.redirect("/profil");
   }
 };
 
