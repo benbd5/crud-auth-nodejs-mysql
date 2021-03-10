@@ -6,7 +6,7 @@ const get_admin_page = async (req, res) => {
   res.locals.title = "Admin";
 
   const articles = await query(
-    "SELECT articleId, title, description, image, dateAdd, article.userId, category.categoryId, category.name, firstname, lastname, dateRegister FROM article INNER JOIN category ON article.categoryId = category.categoryId INNER JOIN user ON article.userId= user.userId ORDER BY dateAdd DESC"
+    "SELECT articleId, title, description, image, dateAdd, article.userId, category.categoryId, category.name, firstname, lastname, dateRegister FROM article LEFT OUTER JOIN user ON user.userId = article.userId INNER JOIN category ON article.categoryId = category.categoryId ORDER BY dateAdd DESC"
   );
 
   const users = await query(

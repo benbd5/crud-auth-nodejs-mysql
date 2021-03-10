@@ -31,7 +31,13 @@
                 </a>
               </td>
               <td><%= article.title %></td>
+              <% if (!article.userId) { %>
+              <td>
+                Auteur supprimé
+              </td>
+              <% } else {%>
               <td><%= article.firstname %></td>
+              <% } %>
               <td><%= article.name %></td>
               <td><%= moment(article.dateAdd).format('DD/MM/YYYY') %></td>
               <td>

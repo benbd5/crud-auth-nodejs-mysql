@@ -8,7 +8,7 @@ const get_category = async (req, res) => {
   );
 
   const categories = await query(
-    "SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM user INNER JOIN article ON user.userId = article.userId INNER JOIN category ON article.categoryId = category.categoryId WHERE category.categoryId = ?",
+    "SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name FROM article LEFT OUTER JOIN user ON user.userId = article.userId INNER JOIN category ON article.categoryId = category.categoryId WHERE category.categoryId = ?",
     id
   );
 

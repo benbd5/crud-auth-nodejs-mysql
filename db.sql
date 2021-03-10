@@ -78,3 +78,29 @@ SELECT * FROM user WHERE email='ben@test.com';
 
 -- Test update
 UPDATE article SET title = ? WHERE articleId=1;
+
+#------------------------------------------------------
+-- LEFT OUTTER JOIN pour afficher des valeurs NULL (dans mon cas quand un auteur est supprimé, 
+-- je veux que l'article s'affiche quand meme
+SELECT article.title, article.image, article.description, article.dateAdd, article.articleId, 
+user.userId, user.lastname, user.firstname, user.profilPicture, category.categoryId, category.name
+FROM article 
+LEFT OUTER JOIN user ON user.userId = article.userId
+INNER JOIN category ON article.categoryId = category.categoryId
+WHERE articleId = 76;
+
+-- SUPPRIMER UN UTILISATEUR ET SES PASSER ARTICLES EN ANONYMES
+ALTER TABLE article DROP FOREIGN KEY article_user0_FK;
+
+-- PASSER `userId` de la table article de NOT NULL a NULL
+ALTER TABLE article MODIFY `userId` Int NULL;
+
+-- Re ajouter la cle etrangere avec le nouveau parametre ON DELETE SET NULL
+ALTER TABLE article ADD CONSTRAINT article_user0_FK FOREIGN KEY (userId) REFERENCES user(userId) ON DELETE SET NULL;
+
+SELECT * FROM article WHERE userId = 15;
+
+-- Test de suppression d'un utilisateur : userId=15
+DELETE FROM user WHERE userId = 15;
+
+-- Tous ses articles sont bien declares en userId=NULL
