@@ -4,8 +4,12 @@ nav {
   align-items: center;
 }
 
-.nav-link:hover {
+.nav-link {
   font-size: 17px;
+}
+
+.nav-link:hover {
+  font-size: 18px;
 }
 
 #profilPictureNavbar,
@@ -16,4 +20,14 @@ nav {
 
 #logo {
   width: 120px;
+}
+#navFluid {
+  width: auto;
+}
+
+/* Media-queries */
+@media (max-width: 992px) {
+  #navFluid {
+    width: 100%;
+  }
 }

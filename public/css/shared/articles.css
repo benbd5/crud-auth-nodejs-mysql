@@ -1,7 +1,6 @@
 .card img {
   width: 400px;
   height: 350px;
-  /* border-bottom: 0.05px solid #aec3bf; */
 }
 
 .card {
@@ -15,10 +14,8 @@
 .card-body {
   max-width: 400px;
   max-height: 300px;
-  width: 400px;
   text-overflow: ellipsis;
   overflow: hidden;
-  /* background: #aec3bf; */
 }
 
 .edit_delete {

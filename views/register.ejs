@@ -31,57 +31,69 @@
       </div>
       <% } %>
 
+
+
       <!-- Formulaire d'inscription -->
-      <form action="/auth/register" method="POST">
-        <div class="mb-4">
-          <h2 class="h4">S'inscrire</h2>
-        </div>
 
-        <!-- Lastname -->
-        <div class="mb-3">
-          <div class="input-group">
-            <input type="text" class="form-control form__input" name="lastname" placeholder="Votre nom"
-              <% if (locals.form) { %> value="<%= locals.form.lastname %>" <% } %>>
+      <section class="register">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <h2>Inscription</h2>
+            <hr class="littleHr">
+          </div>
+
+          <div class="row d-flex justify-content-center">
+            <form class="form-register" action="/auth/register" method="POST">
+
+              <div class="row">
+                <!-- Lastname -->
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="lastnameRegister" class="mb-1">Nom</label>
+                    <input type="text" class="form-control form__input" name="lastname" placeholder="Votre nom"
+                      <% if (locals.form) { %> value="<%= locals.form.lastname %>" <% } %>>
+                  </div>
+                </div>
+
+                <!-- Firstname -->
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="firstnameRegister" class="mb-1">Prénom</label>
+                    <input type="text" class="form-control form__input" name="firstname" placeholder="Votre prénom"
+                      id="firstnameRegister" <% if (locals.form) { %> value="<%= form.firstname %>" <% } %>>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="form-group mb-3">
+                <label for="emailRegister" class="mb-1">Email</label>
+                <input type="email" class="form-control form__input" name="email" placeholder="Votre email"
+                  <% if (locals.form) { %> value="<%= form.email %>" <% } %>>
+              </div>
+
+              <!-- Password -->
+              <div class="form-group mb-3">
+                <label for="password" class="mb-1">Mot de passe</label>
+                <input type="password" class="form-control form__input" name="password"
+                  placeholder="Votre mot de passe">
+              </div>
+
+              <!-- Confirm password -->
+              <div class="form-group mb-3">
+                <label for="confirmPassword" class="mb-1">Confirmer le mot de passe</label>
+                <input type="password" class="form-control form__input" name="confirmPassword"
+                  placeholder="Confirmez votre mot de passe">
+              </div>
+
+              <button type="submit" class="btn btn-primary">S'inscrire</button>
+            </form>
+
           </div>
         </div>
-
-        <!-- Firstname -->
-        <div class="mb-3">
-          <div class="input-group">
-            <input type="text" class="form-control form__input" name="firstname" placeholder="Votre prénom"
-              <% if (locals.form) { %> value="<%= form.firstname %>" <% } %>>
-          </div>
-        </div>
-
-        <!-- Email -->
-        <div class="mb-3">
-          <div class="input-group">
-            <input type="email" class="form-control form__input" name="email" placeholder="Votre email"
-              <% if (locals.form) { %> value="<%= form.email %>" <% } %>>
-          </div>
-        </div>
-
-        <!-- Password -->
-        <div class="mb-3">
-          <div class="input-group">
-            <input type="password" class="form-control form__input" name="password" placeholder="Votre mot de passe">
-          </div>
-        </div>
-
-        <!-- Confirm password -->
-        <div class="mb-3">
-          <div class="input-group">
-            <input type="password" class="form-control form__input" name="confirmPassword"
-              placeholder="Confirmez votre mot de passe">
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-block btn-primary">S'inscrire</button>
-      </form>
-
+      </section>
     </div>
   </div>
 </div>
-
 
 <%- include('partials/footer.ejs') %>
