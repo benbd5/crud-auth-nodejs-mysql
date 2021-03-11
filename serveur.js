@@ -29,7 +29,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Robots.txt
-app.use(robots({ UserAgent: "*" }));
+app.use(robots({ UserAgent: "*", Disallow: "/admin" }));
 
 // Dotenv
 require("dotenv").config();
