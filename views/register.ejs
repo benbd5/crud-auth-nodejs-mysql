@@ -51,7 +51,7 @@
                   <div class="form-group mb-3">
                     <label for="lastnameRegister" class="mb-1">Nom</label>
                     <input type="text" class="form-control form__input" name="lastname" placeholder="Votre nom"
-                      <% if (locals.form) { %> value="<%= locals.form.lastname %>" <% } %>>
+                      id="lastnameRegister" <% if (locals.form) { %> value="<%= locals.form.lastname %>" <% } %>>
                   </div>
                 </div>
 
@@ -69,21 +69,21 @@
               <div class="form-group mb-3">
                 <label for="emailRegister" class="mb-1">Email</label>
                 <input type="email" class="form-control form__input" name="email" placeholder="Votre email"
-                  <% if (locals.form) { %> value="<%= form.email %>" <% } %>>
+                  id="emailRegister" <% if (locals.form) { %> value="<%= form.email %>" <% } %>>
               </div>
 
               <!-- Password -->
               <div class="form-group mb-3">
                 <label for="password" class="mb-1">Mot de passe</label>
-                <input type="password" class="form-control form__input" name="password"
-                  placeholder="Votre mot de passe">
+                <input type="password" class="form-control form__input" name="password" placeholder="Votre mot de passe"
+                  id="password">
               </div>
 
               <!-- Confirm password -->
               <div class="form-group mb-3">
                 <label for="confirmPassword" class="mb-1">Confirmer le mot de passe</label>
                 <input type="password" class="form-control form__input" name="confirmPassword"
-                  placeholder="Confirmez votre mot de passe">
+                  placeholder="Confirmez votre mot de passe" id="confirmPassword">
               </div>
 
               <button type="submit" class="btn btn-primary">S'inscrire</button>

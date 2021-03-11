@@ -7,6 +7,7 @@ const express = require("express"),
   MySQLStore = require("express-mysql-session")(session),
   bodyParser = require("body-parser"),
   fileupload = require("express-fileupload"),
+  robots = require("express-robots-txt"),
   methodOverride = require("method-override"),
   mysql = require("mysql");
 
@@ -26,6 +27,9 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Robots.txt
+app.use(robots({ UserAgent: "*", Disallow: "/" }));
 
 // Dotenv
 require("dotenv").config();
@@ -72,6 +76,9 @@ app.use(
     resave: false, // force à ce qu'une nouvelle session soit crée
     saveUninitialized: true, // force à ce qu'une nouvelle session soit enregistrée
     cookie: {
+      // secure: true,
+      httpOnly: true, // prévenir les attaques CSRF (comme les scripts intersites)
+      sameSite: "strict", // prévenir les attaques CSRF et XSS (garantit que le cookie est envoyé dans des requêtes uniquement au sein du même site)
       maxAge: 1000 * 60 * 60 * 24, // le cookie dure 24h
     },
     store: sessionStore, // SessionsStore pour récupérer les cookies dans la base de données
