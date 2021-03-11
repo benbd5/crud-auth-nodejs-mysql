@@ -52,7 +52,7 @@ router.get("/login", authController.get_login_page);
 // Se connecter
 /**
  * @swagger
- * /login:
+ * /auth/login:
  *  post:
  *      summary: Connexion
  *      description: Connexion d'un utilisateur

@@ -7,7 +7,7 @@ const sharp = require("sharp");
 // -------------------------- GET Articles --------------------------
 // Liste des articles
 const get_list_article = async (req, res) => {
-  res.locals.title = "Accueil";
+  res.locals.title = "Wave'sReport";
 
   const categories = await query(
     "SELECT categoryId, name, userId FROM category"

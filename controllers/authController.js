@@ -81,10 +81,7 @@ const post_register = async (req, res) => {
     req.flash("messageFields", "Veuillez remplir tous les champs.");
     req.flash("form", form);
     return res.redirect(`back`);
-  }
-
-  // Mots de passes non hashés lors de la comparaison --> à modifier
-  else if (password != confirmPassword) {
+  } else if (password != confirmPassword) {
     req.flash(
       "messageDoubleChekMdp",
       "Les mots de passe ne sont pas identiques."

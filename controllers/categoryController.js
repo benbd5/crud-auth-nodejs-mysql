@@ -12,6 +12,8 @@ const get_category = async (req, res) => {
     id
   );
 
+  res.locals.title = `${singleCategory[0].name}`;
+
   res.render("category", { categories, singleCategory: singleCategory[0] });
 };
 
